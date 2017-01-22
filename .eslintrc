@@ -33,6 +33,7 @@
     "jsdoc/require-param-type": 2,
     "jsdoc/require-returns-description": 2,
     "jsdoc/require-returns-type": 2,
+    "max-len": [2, 80],
   },
   "settings": {
     "jsdoc": {
