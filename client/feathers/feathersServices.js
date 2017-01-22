@@ -3,7 +3,7 @@
 
 // See feathers-reduxify-services::default
 export const mapServicePathsToNames = {
-  users: 'users',
+  artists: 'artists',
   messages: 'messages',
   logs: 'logs',
   config: 'config',
@@ -11,4 +11,4 @@ export const mapServicePathsToNames = {
 
 // See feathers-reduxify-services::getServicesStatus.
 // Order highest priority msg first.
-export const prioritizedListServices = ['logs'];
+export const prioritizedListServices = ['artists', 'logs'];

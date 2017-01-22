@@ -5,9 +5,10 @@ const debug = require('debug')('service:index');
 const config = require('config');
 const auth = require('feathers-authentication').hooks;
 
-// const verifyReset = require('./verifyReset');
 const tryHook = require('./hooks/tryHook');
 const logger = require('../utils/loggerProduction');
+
+const artist = require('./artist');
 
 debug('Required');
 
@@ -15,7 +16,7 @@ module.exports = function () { // 'function' needed as we use 'this'
   debug('Config');
   const app = this;
 
-  // app.configure(authentication);
+  app.configure(artist);
 
   // get client config file
   app.use('/config', {
