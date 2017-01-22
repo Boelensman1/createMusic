@@ -11,7 +11,7 @@ import loggerBasic from './loggerBasic'; // eslint-disable-line no-unused-vars
 export default [
   reduxThunk, // Thunk middleware for Redux
   reduxMulti, // Dispatch multiple actions
-  reduxPromiseMiddleware(), // Resolve, reject promises with conditional optimistic updates
+  reduxPromiseMiddleware(), // Resolve/reject promises (with optimistic updates)
   routerMiddleware(browserHistory), // !! IMPORTANT for location.href changes
   //loggerBasic, // A basic middleware logger
 ];

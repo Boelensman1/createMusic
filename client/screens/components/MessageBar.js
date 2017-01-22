@@ -14,7 +14,8 @@ const MessageBar = ({ message, servicesRootState }) => {
 
 MessageBar.propTypes = {
   message: PropTypes.string, // optional message to display
-  servicesRootState: PropTypes.object.isRequired, // parent of all services' states
+  // parent of all services' states
+  servicesRootState: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({

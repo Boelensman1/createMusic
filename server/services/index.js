@@ -5,10 +5,7 @@ const debug = require('debug')('service:index');
 const config = require('config');
 const auth = require('feathers-authentication').hooks;
 
-const authentication = require('./authentication');
-const verifyReset = require('./verifyReset');
-const user = require('./user');
-const message = require('./message');
+// const verifyReset = require('./verifyReset');
 const tryHook = require('./hooks/tryHook');
 const logger = require('../utils/loggerProduction');
 
@@ -18,10 +15,7 @@ module.exports = function () { // 'function' needed as we use 'this'
   debug('Config');
   const app = this;
 
-  app.configure(authentication);
-  app.configure(verifyReset);
-  app.configure(user);
-  app.configure(message);
+  // app.configure(authentication);
 
   // get client config file
   app.use('/config', {
@@ -39,19 +33,6 @@ module.exports = function () { // 'function' needed as we use 'this'
       ],
     },
     create({ level, msg, payload }, params) {
-      const paramsUser = params.user;
-
-      if (paramsUser && (paramsUser.email || paramsUser.username)) {
-        payload.user = payload.user || {};
-
-        if (paramsUser.email) {
-          payload.user.email = paramsUser.email;
-        }
-        if (paramsUser.username) {
-          payload.user.username = paramsUser.username;
-        }
-      }
-
       if (!payload.tags) {
         payload.tags = 'client';
       }

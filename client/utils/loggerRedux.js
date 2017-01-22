@@ -1,4 +1,3 @@
-
 // The logger expects the client config to have been already loaded
 import { config } from '../utils/config';
 
@@ -7,15 +6,19 @@ var logs = null; // eslint-disable-line no-var
 
 export const logger = (level, msg, payload = {}) => {
   if (!dispatch || !logs) {
-    throw new Error('loggerRedux.init must be called before loggerRedux.logger');
+    throw new Error(
+      'loggerRedux.init must be called before loggerRedux.logger'
+    );
   }
 
   if (config && config.agent) { // just being careful
-    payload.deviceId = config.agent.deviceId; // eslint-disable-line no-param-reassign
+    // eslint-disable-next-line no-param-reassign
+    payload.deviceId = config.agent.deviceId;
   }
 
   dispatch(logs.create({ level, msg, payload }))
-    .catch(err => console.log('LoggerRedux error:', err.message)); // eslint-disable-line no-console
+    // eslint-disable-next-line no-console
+    .catch(err => console.log('LoggerRedux error:', err.message));
 };
 
 export const initLogger = (storeDispatch, feathersServicesLogs) => {

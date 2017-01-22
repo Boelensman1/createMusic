@@ -24,7 +24,8 @@ module.exports.configLoad = (store, feathersServices) =>
       return clientConfig;
     })
     .catch(error => {
-      // We cannot use the logger as it requires a loaded config. Log directly to the server.
+      // We cannot use the logger as it requires a loaded config.
+      // Log directly to the server.
       store.dispatch(feathersServices.logs.create({
         level: 'error',
         msg: 'Client config get fail',
@@ -35,7 +36,8 @@ module.exports.configLoad = (store, feathersServices) =>
         ));
     });
 
-// Return current value of clientConfig. We cannot do this with ES6 as far as I can tell.
+// Return current value of clientConfig.
+// We cannot do this with ES6 as far as I can tell.
 // This code depends on how Babel transpiles import { config } from './config';
 Object.defineProperty(module.exports, 'config', {
   get() {

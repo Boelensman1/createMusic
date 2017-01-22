@@ -1,4 +1,4 @@
-
+/* eslint-disable max-len */
 /*
  Log entries written to files are in JSON format. The high-level properties are:
 
@@ -28,6 +28,7 @@
  }
  }
  */
+/* eslint-enable */
 
 const debug = require('debug')('server:loggerProduction');
 const path = require('path');
@@ -47,7 +48,10 @@ const transports = [
     level: config.logs.logConsoleLevel,
     timestamp: () => {
       const date = new Date();
-      return `${last2(date.getHours())}:${last2(date.getMinutes())}:${last2(date.getSeconds())}`;
+      return (
+        `${last2(date.getHours())}:${last2(date.getMinutes())}:` +
+        `${last2(date.getSeconds())}`
+      );
     },
     handleExceptions: true,
     json: false,
@@ -98,19 +102,29 @@ logger.setLevels = (levels) => {
 
 logger.setMorgan = () => {
   debug('Setup HTTP request logging');
-  morgan.token('username', (req) => (req.user ? req.user.username || '' : '')); // from middleware
+  // from middleware
+  morgan.token('username', (req) => (req.user ? req.user.username || '' : ''));
 
   const verboseFormat = [ // eslint-disable-line no-unused-vars
     '{',
-    '"method": ":method", "url": ":url", "status": ":status", "res_time": ":response-time", ',
-    '"remote_addr": ":remote-addr", "remote_user": ":remote-user", "date": ":date[clf]", ',
+    (
+    '"method": ":method", ' +
+    '"url": ":url", ' +
+    '"status": ":status", ' +
+    '"res_time": ":response-time", '
+    ),
+    (
+    '"remote_addr": ":remote-addr", ' +
+    '"remote_user": ":remote-user", ' +
+    '"date": ":date[clf]", '
+    ),
     '"result_length": ":res[content-length]", "referrer": ":referrer", ',
     '"user_agent": ":user-agent", "http_version": ":http-version"',
     '}',
   ].join('');
 
-  const terseFormat =
-    '{"method":":method", "url":":url", "status":":status", "ms":":response-time"}';
+  const terseFormat = '{"method":":method", "url":":url", ' +
+    '"status":":status", "ms":":response-time"}';
 
   const devFormat = ':method :url (:status) :response-time';
 

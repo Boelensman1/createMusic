@@ -34,6 +34,7 @@
     "jsdoc/require-returns-description": 2,
     "jsdoc/require-returns-type": 2,
     "max-len": [2, 80],
+    "no-unused-vars": ["error", { "vars": "all", "args": "none" }],
   },
   "settings": {
     "jsdoc": {

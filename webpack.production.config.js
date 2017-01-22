@@ -1,4 +1,4 @@
-
+/* eslint max-len: ["error", 100]*/
 /* eslint-env node */
 /* eslint no-console: 0, no-var: 0 */
 
@@ -17,7 +17,7 @@ validateEnvironmentVariables();
 const config = require('config');
 
 if (config.NODE_ENV === 'devserver') {
-  throw new Error('This webpack config does not work as is with the web-dev-server.')
+  throw new Error('This webpack config does not work as is with the web-dev-server.');
 }
 
 const isProduction = config.isProduction;
@@ -222,7 +222,7 @@ const webpackConfig = {
 
        You should however leave the 'react' alias enabled if you are using Redux-DevTools
        (instead of Redux-DevTools-extension). That alias will sidestep a peculiar packaging bug,
-       see http://stackoverflow.com/questions/28519287/what-does-only-a-reactowner-can-have-refs-mean/32444088#32444088
+       see http://stackoverflow.com/questions/28519287/32444088#32444088
 
        After all this, we decided minify the npm source as that seems the more common approach.
        More info will be available on edge case, failure modes and workarounds.

@@ -3,7 +3,8 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
 import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton'; // eslint-disable-line no-unused-vars
+// eslint-disable-next-line no-unused-vars
+import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -24,19 +25,14 @@ export const AppNavBar = ({ label, screen, message }) => (
 
 AppNavBar.propTypes = {
   label: PropTypes.string.isRequired, // Nav bar label
-  screen: PropTypes.string.isRequired, // nav bar is for this patch, determines options shown
+  // nav bar is for this patch, determines options shown
+  screen: PropTypes.string.isRequired,
   username: PropTypes.any,
   message: PropTypes.string, //
 };
 
 const makeBarButtons = (screen) => {
   switch (screen) {
-    /*
-     Material-ui 0.14.x is not yet compatible with React 15, and React issues this warning:
-     Warning: IconButton: `ref` is not a prop. Trying to access it will result in `undefined`
-     being returned. If you need to access the same value within the child component, you should
-     pass it as a different prop.
-     */
     case 'app/main':
       return (
         <IconMenu

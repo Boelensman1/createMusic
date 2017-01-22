@@ -3,11 +3,13 @@
 
 /**
  * Run a hook. If the hook fails, its like it never ran.
- * You would typically use this to wrap already available hooks e.g. auth.verifyToken().
+ * You would typically use this to wrap already available hooks
+ * e.g. auth.verifyToken().
  *
  * @param {Function} hookFunc - the hook to run.
  *
- * Example - if the request is from an authenticated user, place his user info in hook.params.user.
+ * Example - if the request is from an authenticated user,
+ * place his user info in hook.params.user.
  * before: {
  *   create: [
  *     tryHook(auth.verifyToken()),

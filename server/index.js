@@ -2,13 +2,15 @@
 /* eslint no-console: 0 */
 
 const debug = require('debug')('server:index');
-const environmentVariablesValidation = require('./validations/environmentVariablesValidation');
+const environmentVariablesValidation =
+  require('./validations/environmentVariablesValidation');
 
 // Load environment variables.
 debug('Load environment variables');
 require('dotenv').config({ silent: true });
 
-// Validate & sanitize env vars. (We need a sanitized NODE_ENV before we can do anything else.)
+// Validate & sanitize env vars.
+// (We need a sanitized NODE_ENV before we can do anything else.)
 debug('Sanitize env vars');
 const [envErrs, env] = environmentVariablesValidation();
 
@@ -22,8 +24,10 @@ Object.freeze(config); // prevent anything, anywhere from changing the config
 debug('Start logger');
 const logger = require('./utils/loggerProduction');
 
+const envText = config.NODE_ENV.toUpperCase();
+
 logger.info('==============================================================');
-logger.info(`Server initialization started in ${config.NODE_ENV.toUpperCase()} mode.`,
+logger.info(`Server initialization started in ${envText} mode.`,
   { tags: 'server' });
 logger.info('==============================================================');
 
@@ -47,9 +51,6 @@ debug('Handler for uncaught exceptions');
 handleUncaughtException();
 
 // Pass config to whatever needs it
-const usersClientValidations = require('../common/helpers/usersClientValidations');
-
-usersClientValidations.setClientValidationsConfig(config);
 
 // Start server
 const port = normalizePort(config.server.port);
@@ -63,18 +64,22 @@ const server = app.listen(port)
   .on('listening', onListening);
 
 // Handle uncaught exceptions
-// Consider enhancements at: https://coderwall.com/p/4yis4w/node-js-uncaught-exceptions
+// Consider enhancements at:
+// https://coderwall.com/p/4yis4w/node-js-uncaught-exceptions
 function handleUncaughtException() {
   process.on('uncaughtException', (error) => {
     debug('Uncaught exception');
-    console.error('\n\n=== uncaught exception ================='); // eslint-disable-line no-console
+    // eslint-disable-next-line no-console
+    console.error('\n\n=== uncaught exception =================');
     console.error(error.message); // eslint-disable-line no-console
     console.error(error.stack); // eslint-disable-line no-console
     console.error('========================================\n\n');
 
     const message = error.message || '';
     const stack = (error.stack || '').split('\n');
-    logger.error('Uncaught exception. Exiting.', { error: { message, stack }, tags: 'exit' });
+    logger.error('Uncaught exception. Exiting.', {
+      error: { message, stack }, tags: 'exit',
+    });
 
     exitProcess(100);
   });
@@ -109,11 +114,17 @@ function onError(error) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      logger.error(`${bind} requires elevated privileges. Exiting.`, { error, tags: 'exit' });
+      logger.error(`${bind} requires elevated privileges. Exiting.`, {
+        error,
+        tags: 'exit',
+      });
       exitProcess(110);
       break;
     case 'EADDRINUSE':
-      logger.error(`${bind} is already in use. Exiting.`, { error, tags: 'exit' });
+      logger.error(`${bind} is already in use. Exiting.`, {
+        error,
+        tags: 'exit',
+      });
       exitProcess(111);
       break;
     default:

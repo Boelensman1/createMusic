@@ -66,6 +66,7 @@ module.exports = function environmentalVariablesValidation() {
   // Set env variables
   Object.keys(validations).forEach(variable => {
     if (cleanEnv[variable] !== '') {
+      // eslint-disable-next-line max-len
       const cleanValue = variable === 'NODE_ENV' ? nodeEnv[cleanEnv.NODE_ENV] : cleanEnv[variable];
 
       process.env[variable] = cleanValue;

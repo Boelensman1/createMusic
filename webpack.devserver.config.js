@@ -1,17 +1,17 @@
+/* eslint max-len: ["error", 100]*/
 
 const webpack = require('webpack'); // eslint-disable-line import/no-unresolved
 const rucksack = require('rucksack-css');
 const path = require('path');
 
 
-
 // ********** Note require('config') is not used here. Any params must be set in process.env *******
-var reactDomLibPath = path.join(__dirname, "./node_modules/react-dom/lib");
-var alias = {};
-["EventPluginHub", "EventConstants", "EventPluginUtils", "EventPropagators",
- "SyntheticUIEvent", "CSSPropertyOperations", "ViewportMetrics"].forEach(function(filename){
-    alias["react/lib/"+filename] = path.join(__dirname, "./node_modules/react-dom/lib", filename);
-});
+// const reactDomLibPath = path.join(__dirname, './node_modules/react-dom/lib');
+const alias = {};
+['EventPluginHub', 'EventConstants', 'EventPluginUtils', 'EventPropagators',
+  'SyntheticUIEvent', 'CSSPropertyOperations', 'ViewportMetrics'].forEach((filename) => {
+    alias[`react/lib/${filename}`] = path.join(__dirname, './node_modules/react-dom/lib', filename);
+  });
 
 module.exports = {
 
@@ -60,7 +60,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
-    alias: alias
+    alias,
   },
   postcss: [
     rucksack({
