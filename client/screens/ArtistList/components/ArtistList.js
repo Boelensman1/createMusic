@@ -2,7 +2,7 @@ import React from 'react';
 
 export default ({getArtists, artists}) => (
   <div>
-    <h1 onClick={getArtists}>load artists</h1>
+    <button onClick={getArtists}>load artists</button>
     {artists && (
       <ul>
         {artists.map((artist, i) => (

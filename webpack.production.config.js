@@ -36,7 +36,11 @@ const webpackConfig = {
   // re devtool: http://cheng.logdown.com/posts/2016/03/25/679045
   devtool: isProduction ? 'cheap-module-source-map' : 'source-map',
   entry: {
-    main: ['./index.js'],
+    main: [
+      'webpack-dev-server/client?http://localhost:8080',
+      'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
+      './index.js'
+    ],
     // Webpack cannot produce chunks with a stable chunk hash as of June 2016,
     // stable meaning the hash value changes only when the the code itself changes.
     // See doc/FAQ.md#webpackChunks.
@@ -194,9 +198,7 @@ const webpackConfig = {
         test: /\.(js|jsx)$/, // does anyone still use .jsx?
         exclude: /(node_modules|bower_components)/,
         loaders: [
-          /*
           'react-hot',
-          */
           'babel-loader',
         ],
       },
@@ -245,6 +247,7 @@ const webpackConfig = {
     }),
   ],
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     // Webpack's default file watcher does not work with NFS file systems on VMs,
     // definitely not with Oracle VM, and likely not with other VMs.
     // OldWatchingPlugin is a slower alternative that works everywhere.
