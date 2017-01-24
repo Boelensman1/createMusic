@@ -15,11 +15,11 @@ const alias = {};
 
 module.exports = {
   context: path.join(__dirname, './client'),
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'source-map',
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
-    './index.js'
+    './index.js',
   ],
   output: {
     path: path.join(__dirname, './public/dist'),

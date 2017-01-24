@@ -1,4 +1,3 @@
-
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 
 import reducers from './reducers';

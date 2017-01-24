@@ -8,7 +8,7 @@ import Avatar from 'material-ui/Avatar';
 
 const getFirstLetter = (artist) => {
   if (artist[0].match(/[a-z]/i)) { return artist[0].toUpperCase(); }
-  if (artist[0].match(/[0-9]/)) { return '123'; }
+  if (artist[0].match(/[0-9]/)) { return '1'; }
   return '#';
 };
 

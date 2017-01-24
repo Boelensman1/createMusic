@@ -11,7 +11,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { config } from './utils/config';
 
 import AppWrapper from './screens';
-// import UserSignIn from './screens/Users/UserSignIn';
+import NowPlaying from './screens/NowPlaying';
 import App from './screens/App';
 
 // Routing
@@ -20,9 +20,10 @@ export default function (store, history) {
     <MuiThemeProvider>
       <Provider store={store}>
         <Router history={history}>
-          <Route path="/" component={AppWrapper}>
+          <Route path='/' component={AppWrapper}>
             <IndexRedirect to={config.client.defaultRoute} />
             <Route path={config.client.defaultRoute} component={App} />
+            <Route path="/nowPlaying" component={NowPlaying} />
           </Route>
         </Router>
       </Provider>

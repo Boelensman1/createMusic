@@ -39,7 +39,7 @@ const webpackConfig = {
     main: [
       'webpack-dev-server/client?http://localhost:8080',
       'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
-      './index.js'
+      './index.js',
     ],
     // Webpack cannot produce chunks with a stable chunk hash as of June 2016,
     // stable meaning the hash value changes only when the the code itself changes.

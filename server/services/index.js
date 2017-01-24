@@ -1,4 +1,3 @@
-
 /* eslint no-console: 0, no-param-reassign: 0 */
 
 const debug = require('debug')('service:index');
@@ -8,7 +7,10 @@ const auth = require('feathers-authentication').hooks;
 const tryHook = require('./hooks/tryHook');
 const logger = require('../utils/loggerProduction');
 
+const MPC = require('mpc-js').MPC;
+
 const artist = require('./artist');
+const playlist = require('./playlist');
 
 debug('Required');
 
@@ -16,7 +18,13 @@ module.exports = function () { // 'function' needed as we use 'this'
   debug('Config');
   const app = this;
 
+  const mpc = new MPC();
+  mpc.connectTCP('mainpc', 6600);
+
+  app.set('mpc', mpc)
+
   app.configure(artist);
+  app.configure(playlist);
 
   // get client config file
   app.use('/config', {

@@ -1,4 +1,3 @@
-
 const randomString = require('./randomString');
 
 var clientConfig = {}; // eslint-disable-line no-var
@@ -8,7 +7,7 @@ module.exports.configLoad = (store, feathersServices) =>
   store.dispatch(feathersServices.config.get())
     .then(res => {
       if (!localStorage.deviceId) {
-        localStorage.deviceId = randomString(30);
+        localStorage.deviceId = randomString();
       }
 
       clientConfig = res.action.payload;
