@@ -40,6 +40,26 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/nowPlaying',
+      name: 'nowPlayingPage',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/NowPlayingPage/reducer'),
+          import('containers/NowPlayingPage/sagas'),
+          import('containers/NowPlayingPage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('nowPlayingPage', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {

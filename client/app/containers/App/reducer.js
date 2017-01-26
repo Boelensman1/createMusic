@@ -31,7 +31,7 @@ function appReducer(state = initialState, action) {
       return state
         .set('loading', true)
         .set('error', false)
-        .set('repositories', false);
+        .set('artistList', false);
     case LOAD_ARTISTLIST_SUCCESS:
       return state
         .set('loading', false)

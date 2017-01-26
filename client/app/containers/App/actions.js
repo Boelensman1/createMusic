@@ -24,7 +24,7 @@ import {
 /**
  * Load the artistlist, this action starts the request saga
  *
- * @return {object} An action object with a type of LOAD_REPOS
+ * @return {object} An action object with a type of LOAD_ARTISTLIST
  */
 export function loadArtistList() {
   return {

@@ -1,7 +1,3 @@
-/**
- * Gets the repositories of the user from Github
- */
-
 import { take, call, put, cancel, takeLatest } from 'redux-saga/effects';
 
 import { LOCATION_CHANGE } from 'react-router-redux';
@@ -10,9 +6,6 @@ import { artistListLoaded, artistListLoadingError } from 'containers/App/actions
 
 import request from 'utils/request';
 
-/**
- * Github repos request/response handler
- */
 export function* getArtistList() {
   const requestURL = 'http://localhost:3030/artists';
 
