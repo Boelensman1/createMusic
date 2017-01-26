@@ -1,5 +1,7 @@
 'use strict';
 
+const addAlbumArt = require('./addAlbumArt');
+
 const globalHooks = require('../../../hooks');
 const hooks = require('feathers-hooks');
 
@@ -17,7 +19,7 @@ exports.before = {
 exports.after = {
   all: [],
   find: [],
-  get: [],
+  get: [addAlbumArt()],
   create: [],
   update: [],
   patch: [],

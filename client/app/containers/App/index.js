@@ -12,6 +12,24 @@
  */
 
 import React from 'react';
+import styled from 'styled-components';
+
+import Header from './Header';
+import Footer from './Footer';
+
+const Page = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
+const Content = styled.div`
+  flex: 1 1 auto;
+  position: relative; /* need this to position inner content */
+  overflow-y: auto;
+  padding: 1em;
+`;
+
 
 export default class App extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
@@ -21,9 +39,13 @@ export default class App extends React.PureComponent { // eslint-disable-line re
 
   render() {
     return (
-      <div>
-        {React.Children.toArray(this.props.children)}
-      </div>
+      <Page>
+        <Header />
+        <Content>
+          {React.Children.toArray(this.props.children)}
+        </Content>
+        <Footer />
+      </Page>
     );
   }
 }
