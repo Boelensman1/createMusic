@@ -10,3 +10,7 @@
  */
 
 export const DEFAULT_LOCALE = 'en';
+
+export const LOAD_ARTISTLIST = 'playMusic/App/LOAD_ARTISTLIST';
+export const LOAD_ARTISTLIST_SUCCESS = 'playMusic/App/LOAD_ARTISTLIST_SUCCESS';
+export const LOAD_ARTISTLIST_ERROR = 'playMusic/App/LOAD_ARTISTLIST_ERROR';
