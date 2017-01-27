@@ -13,6 +13,7 @@ import { makeSelectActivePlaylistContents, makeSelectLoading, makeSelectError } 
 import messages from './messages';
 import { loadActivePlayList } from './actions';
 
+import PlayPauseButton from 'containers/App/PlayPauseButton';
 import NowPlayingList from './NowPlayingList';
 
 export class NowPlayingPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -31,6 +32,7 @@ export class NowPlayingPage extends React.PureComponent { // eslint-disable-line
             { name: 'description', content: 'Description of NowPlayingPage' },
           ]}
         />
+        <PlayPauseButton />
         <NowPlayingList loading={loading} activePlaylistContents={activePlaylistContents} error={error} />
         <FormattedMessage {...messages.header} />
       </div>

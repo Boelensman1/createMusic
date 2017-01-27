@@ -12,6 +12,16 @@ class Service {
 
   get(id, params) {
     switch(id) {
+      case 'status':
+        return this.mpc.status.status();
+
+      default:
+        return Promise.reject();
+    }
+  }
+
+  update(id, params) {
+    switch(id) {
       case 'play':
         return this.mpc.playback.play().then(() => null);
 
@@ -26,9 +36,6 @@ class Service {
 
       case 'previous':
         return this.mpc.playback.previous().then(() => null);
-
-      case 'status':
-        return this.mpc.status.status();
 
       default:
         return Promise.reject();

@@ -8,6 +8,8 @@ import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
 
+import globalSaga from 'containers/App/sagas';
+
 const sagaMiddleware = createSagaMiddleware();
 
 export default function configureStore(initialState = {}, history) {
@@ -39,6 +41,7 @@ export default function configureStore(initialState = {}, history) {
   );
 
   // Extensions
+  globalSaga.map(sagaMiddleware.run); //run global saga from 'containers/App/sagas'
   store.runSaga = sagaMiddleware.run;
   store.asyncReducers = {}; // Async reducer registry
 

@@ -14,7 +14,6 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-
 import { loadArtistList } from 'containers/App/actions';
 import { makeSelectArtistList, makeSelectLoading, makeSelectError } from 'containers/App/selectors';
 

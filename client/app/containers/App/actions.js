@@ -19,6 +19,7 @@ import {
   LOAD_ARTISTLIST,
   LOAD_ARTISTLIST_SUCCESS,
   LOAD_ARTISTLIST_ERROR,
+  SEND_PLAYBACK_COMMAND,
 } from './constants';
 
 /**
@@ -57,5 +58,17 @@ export function artistListLoadingError(error) {
   return {
     type: LOAD_ARTISTLIST_ERROR,
     error,
+  };
+}
+
+/**
+ * Send a playback command, this action starts the request saga
+ *
+ * @return {object} An action object with a type of LOAD_ARTISTLIST
+ */
+export function sendPlaybackCommand(command) {
+  return {
+    type: SEND_PLAYBACK_COMMAND,
+    payload: command,
   };
 }

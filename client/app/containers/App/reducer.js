@@ -16,6 +16,7 @@ import {
   LOAD_ARTISTLIST_SUCCESS,
   LOAD_ARTISTLIST,
   LOAD_ARTISTLIST_ERROR,
+  SEND_PLAYBACK_COMMAND,
 } from './constants';
 
 // The initial state of the App
@@ -32,6 +33,9 @@ function appReducer(state = initialState, action) {
         .set('loading', true)
         .set('error', false)
         .set('artistList', false);
+    case SEND_PLAYBACK_COMMAND:
+      return state
+        .set('loading', true)
     case LOAD_ARTISTLIST_SUCCESS:
       return state
         .set('loading', false)
