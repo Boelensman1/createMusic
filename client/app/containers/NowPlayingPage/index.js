@@ -9,11 +9,13 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
+
+import PlayPauseButton from 'containers/App/PlayPauseButton';
+
 import { makeSelectActivePlaylistContents, makeSelectLoading, makeSelectError } from './selectors';
 import messages from './messages';
 import { loadActivePlayList } from './actions';
 
-import PlayPauseButton from 'containers/App/PlayPauseButton';
 import NowPlayingList from './NowPlayingList';
 
 export class NowPlayingPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -27,11 +29,11 @@ export class NowPlayingPage extends React.PureComponent { // eslint-disable-line
       React.PropTypes.array,
       React.PropTypes.bool,
     ]),
-    getNowPlaying: React.PropTypes.func.isRequired,
+    loadActivePlaylist: React.PropTypes.func.isRequired,
   }
 
   componentWillMount() {
-    this.props.getNowPlaying();
+    this.props.loadActivePlaylist();
   }
 
   render() {
@@ -61,7 +63,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    getNowPlaying: () => dispatch(loadActivePlayList()),
+    loadActivePlaylist: () => dispatch(loadActivePlayList()),
   };
 }
 

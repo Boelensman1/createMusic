@@ -20,6 +20,9 @@ import {
   LOAD_ARTISTLIST_SUCCESS,
   LOAD_ARTISTLIST_ERROR,
   SEND_PLAYBACK_COMMAND,
+  LOAD_NOWPLAYING,
+  LOAD_NOWPLAYING_ERROR,
+  LOAD_NOWPLAYING_SUCCESS,
 } from './constants';
 
 /**
@@ -70,5 +73,44 @@ export function sendPlaybackCommand(command) {
   return {
     type: SEND_PLAYBACK_COMMAND,
     payload: command,
+  };
+}
+
+/**
+ * Load now playing
+ *
+ * @return {object} An action object with a type of LOAD_NOWPLAYING
+ */
+export function loadNowPlaying() {
+  return {
+    type: LOAD_NOWPLAYING,
+  };
+}
+
+/**
+ * Dispatched when the now playing data is loaded by the request saga
+ *
+ * @param  {array} repos The repository data
+ *
+ * @return {object}      An action object with a type of LOAD_NOWPLAYING_SUCCESS passing the data
+ */
+export function nowPlayingLoaded(nowPlayingData) {
+  return {
+    type: LOAD_NOWPLAYING_SUCCESS,
+    nowPlayingData,
+  };
+}
+
+/**
+ * Dispatched when loading the nowplaying data fails
+ *
+ * @param  {object} error The error
+ *
+ * @return {object}       An action object with a type of LOAD_NOWPLAYING_ERROR passing the error
+ */
+export function nowPlayingLoadingError(error) {
+  return {
+    type: LOAD_NOWPLAYING_ERROR,
+    error,
   };
 }

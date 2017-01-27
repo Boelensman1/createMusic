@@ -5,16 +5,18 @@ const hooks = require('./hooks');
 class Service {
   constructor(mpc) {
     this.mpc = mpc;
-  }
-
-  doCommand(command) {
+    this.mpc.on('changed-player', () => {
+      mpc.status.status().then(status => {
+        // this.mpc.status.status();
+      });
+    });
   }
 
   get(id, params) {
+    console.log(id)
     switch(id) {
       case 'status':
         return this.mpc.status.status();
-
       default:
         return Promise.reject();
     }
@@ -42,17 +44,6 @@ class Service {
     }
   }
 }
-/*
-next
-pause
-play
-playId
-previous
-seek
-seekCur
-seekId
-stop
-*/
 
 module.exports = function(){
   const app = this;

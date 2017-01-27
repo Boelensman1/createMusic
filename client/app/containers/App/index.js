@@ -12,10 +12,13 @@
  */
 
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import Header from './Header';
 import Footer from './Footer';
+
+import { loadNowPlaying } from './actions';
 
 const Page = styled.div`
   display: flex;
@@ -31,10 +34,15 @@ const Content = styled.div`
 `;
 
 
-export default class App extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+class App extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     children: React.PropTypes.node,
+    loadNowPlaying: React.PropTypes.func.isRequired,
   };
+
+  componentWillMount() {
+    this.props.loadNowPlaying();
+  }
 
   render() {
     return (
@@ -48,3 +56,11 @@ export default class App extends React.PureComponent { // eslint-disable-line re
     );
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    loadNowPlaying: () => dispatch(loadNowPlaying()),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(App);
