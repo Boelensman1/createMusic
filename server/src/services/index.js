@@ -1,5 +1,7 @@
 'use strict';
 
+const playback = require('./playback');
+const artist = require('./artist');
 const playlist = require('./playlist');
 
 const MPC = require('mpc-js').MPC;
@@ -8,7 +10,6 @@ const mpc = new MPC();
 
 mpc.connectTCP('mainpc', 6600);
 
-const artist = require('./artist');
 
 module.exports = function() {
   const app = this;
@@ -21,4 +22,5 @@ module.exports = function() {
 
   app.configure(artist);
   app.configure(playlist);
+  app.configure(playback);
 };
