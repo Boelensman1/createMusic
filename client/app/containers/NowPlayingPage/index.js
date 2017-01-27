@@ -17,6 +17,19 @@ import PlayPauseButton from 'containers/App/PlayPauseButton';
 import NowPlayingList from './NowPlayingList';
 
 export class NowPlayingPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  static propTypes = {
+    loading: React.PropTypes.bool,
+    error: React.PropTypes.oneOfType([
+      React.PropTypes.object,
+      React.PropTypes.bool,
+    ]),
+    activePlaylistContents: React.PropTypes.oneOfType([
+      React.PropTypes.array,
+      React.PropTypes.bool,
+    ]),
+    getNowPlaying: React.PropTypes.func.isRequired,
+  }
+
   componentWillMount() {
     this.props.getNowPlaying();
   }
@@ -39,19 +52,6 @@ export class NowPlayingPage extends React.PureComponent { // eslint-disable-line
     );
   }
 }
-
-NowPlayingPage.propTypes = {
-  loading: React.PropTypes.bool,
-  error: React.PropTypes.oneOfType([
-    React.PropTypes.object,
-    React.PropTypes.bool,
-  ]),
-  activePlaylistContents: React.PropTypes.oneOfType([
-    React.PropTypes.array,
-    React.PropTypes.bool,
-  ]),
-  getNowPlaying: React.PropTypes.func.isRequired,
-};
 
 const mapStateToProps = createStructuredSelector({
   activePlaylistContents: makeSelectActivePlaylistContents(),

@@ -21,30 +21,35 @@ import ArtistList from './ArtistList';
 import messages from './messages';
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  static propTypes = {
+    loading: React.PropTypes.bool,
+    error: React.PropTypes.oneOfType([
+      React.PropTypes.object,
+      React.PropTypes.bool,
+    ]),
+    artistList: React.PropTypes.oneOfType([
+      React.PropTypes.array,
+      React.PropTypes.bool,
+    ]),
+    refreshArtists: React.PropTypes.func.isRequired,
+  }
+
+  componentWillMount() {
+    this.props.refreshArtists();
+  }
+
   render() {
-    const { refreshArtists, loading, artistList, error } = this.props;
+    const { loading, artistList, error } = this.props;
     return (
-      <h1>
-        <FormattedMessage {...messages.header} />
-        <button onClick={refreshArtists}>refresh artists</button>
+      <div>
+        <h1>
+          <FormattedMessage {...messages.header} />
+        </h1>
         <ArtistList loading={loading} artistList={artistList} error={error} />
-      </h1>
+      </div>
     );
   }
 }
-
-HomePage.propTypes = {
-  loading: React.PropTypes.bool,
-  error: React.PropTypes.oneOfType([
-    React.PropTypes.object,
-    React.PropTypes.bool,
-  ]),
-  artistList: React.PropTypes.oneOfType([
-    React.PropTypes.array,
-    React.PropTypes.bool,
-  ]),
-  refreshArtists: React.PropTypes.func.isRequired,
-};
 
 export function mapDispatchToProps(dispatch) {
   return {
