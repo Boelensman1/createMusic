@@ -21,18 +21,19 @@ const AlbumArt = styled.img`
   margin-right: 1em;
 `;
 
-function NowPlayingItem({ item }) {
+function NowPlayingItem({ item, nowPlaying }) {
   return (
     <Item>
       <AlbumArt src={item.albumArt} />
-      <Title>{item.title}</Title>
+      <Title>{item.title} {nowPlaying && 'NOWPLAYING'}</Title>
       <Artist>{item.artist}</Artist>
     </Item>
   );
 }
 
 NowPlayingItem.propTypes = {
-  item: React.PropTypes.object,
+  item: React.PropTypes.object.isRequired,
+  nowPlaying: React.PropTypes.bool.isRequired,
 };
 
 export default NowPlayingItem;

@@ -8,12 +8,12 @@ const UL = styled.ul`
   padding-left: 0;
 `;
 
-function NowPlayingList({ loading, error, activePlaylistContents }) {
+function NowPlayingList({ loading, error, activePlaylistContents, nowPlayingId }) {
   return (
     <UL>
       {error === false ?
           (!loading && activePlaylistContents) && activePlaylistContents.map((item, i) => (
-            <NowPlayingItem key={i} item={item} />
+            <NowPlayingItem key={i} item={item} nowPlaying={item.position === nowPlayingId} />
           )) :
             <span>{error.toString()}</span>}
     </UL>
@@ -22,6 +22,10 @@ function NowPlayingList({ loading, error, activePlaylistContents }) {
 
 NowPlayingList.propTypes = {
   loading: React.PropTypes.bool,
+  nowPlayingId: React.PropTypes.oneOfType([
+    React.PropTypes.number,
+    React.PropTypes.bool,
+  ]),
   error: React.PropTypes.oneOfType([
     React.PropTypes.object,
     React.PropTypes.bool,

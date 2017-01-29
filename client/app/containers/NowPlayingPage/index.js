@@ -12,7 +12,14 @@ import { createStructuredSelector } from 'reselect';
 
 import PlayPauseButton from 'containers/App/PlayPauseButton';
 
-import { makeSelectActivePlaylistContents, makeSelectLoading, makeSelectError } from './selectors';
+import { makeSelectNowPlayingId } from 'containers/App/selectors';
+
+import {
+  makeSelectActivePlaylistContents,
+  makeSelectLoading,
+  makeSelectError,
+} from './selectors';
+
 import messages from './messages';
 import { loadActivePlayList } from './actions';
 
@@ -23,6 +30,10 @@ export class NowPlayingPage extends React.PureComponent { // eslint-disable-line
     loading: React.PropTypes.bool,
     error: React.PropTypes.oneOfType([
       React.PropTypes.object,
+      React.PropTypes.bool,
+    ]),
+    nowPlayingId: React.PropTypes.oneOfType([
+      React.PropTypes.number,
       React.PropTypes.bool,
     ]),
     activePlaylistContents: React.PropTypes.oneOfType([
@@ -37,7 +48,7 @@ export class NowPlayingPage extends React.PureComponent { // eslint-disable-line
   }
 
   render() {
-    const { loading, activePlaylistContents, error } = this.props;
+    const { loading, activePlaylistContents, nowPlayingId, error } = this.props;
 
     return (
       <div>
@@ -48,7 +59,12 @@ export class NowPlayingPage extends React.PureComponent { // eslint-disable-line
           ]}
         />
         <PlayPauseButton />
-        <NowPlayingList loading={loading} activePlaylistContents={activePlaylistContents} error={error} />
+        <NowPlayingList
+          loading={loading}
+          activePlaylistContents={activePlaylistContents}
+          nowPlayingId={nowPlayingId}
+          error={error}
+        />
         <FormattedMessage {...messages.header} />
       </div>
     );
@@ -57,6 +73,7 @@ export class NowPlayingPage extends React.PureComponent { // eslint-disable-line
 
 const mapStateToProps = createStructuredSelector({
   activePlaylistContents: makeSelectActivePlaylistContents(),
+  nowPlayingId: makeSelectNowPlayingId(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
 });
