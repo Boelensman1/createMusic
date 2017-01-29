@@ -4,6 +4,7 @@ const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 const errorHandler = require('errorhandler');
+const cors = require('cors')
 
 const server = require('http').createServer(app);
 const primus = new Primus(server);
@@ -18,6 +19,7 @@ app.set('port', process.env.PORT || 3030);
 // app.use(express.logger('dev'));
 app.use(bodyParser.json())
 app.use(require('express-promise')());
+app.use(cors())
 
 if (process.env.NODE_ENV === 'development') {
   // only use in development
