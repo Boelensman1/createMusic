@@ -13,7 +13,7 @@ export function* sendPlaybackCommand(action) {
   try {
     // Call our request helper (see 'utils/request')
     yield call(request, `${requestURL}/${action.payload}`, {
-      method: 'PUT',
+      method: 'POST',
     });
     // yield put(artistListLoaded(artistList));
   } catch (err) {

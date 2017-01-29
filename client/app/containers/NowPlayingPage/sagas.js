@@ -13,7 +13,7 @@ export function* getActivePlaylistContents() {
   try {
     // Call our request helper (see 'utils/request')
     const activePlaylistContents = yield call(request, requestURL);
-    yield put(activePlayListLoaded(activePlaylistContents.current));
+    yield put(activePlayListLoaded(activePlaylistContents));
   } catch (err) {
     yield put(activePlayListLoadingError(err));
   }
