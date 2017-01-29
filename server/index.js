@@ -13,6 +13,7 @@ const mpc = new MPC();
 
 app.set('mpc', mpc);
 
+app.set('json spaces', 2);
 app.set('port', process.env.PORT || 3030);
 // app.use(express.logger('dev'));
 app.use(bodyParser.json())
@@ -28,8 +29,12 @@ primus.on('connection', function connection(spark) {
     spark.write({ Welcome: 'Hello!' });
 });
 
-const playlistRoute = require('./routes/playlist');
+const playlistRoute = require('./routes/playlists');
+const artistRoute = require('./routes/artists');
+const playbackRoute = require('./routes/playback');
 app.use(playlistRoute);
+app.use(artistRoute);
+app.use(playbackRoute);
 
 
 mpc.connectTCP('mainpc', 6600);

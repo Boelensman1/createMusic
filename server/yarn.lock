@@ -121,10 +121,6 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bluebird@^3.4.1:
-  version "3.4.7"
-  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.4.7.tgz#f72d760be09b7f76d08ed8fae98b289a8d05fab3"
-
 body-parser@^1.16.0:
   version "1.16.0"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.16.0.tgz#924a5e472c6229fb9d69b85a20d5f2532dec788b"
@@ -454,14 +450,6 @@ expand-range@^1.8.1:
 express-mung@^0.4.6:
   version "0.4.6"
   resolved "https://registry.yarnpkg.com/express-mung/-/express-mung-0.4.6.tgz#2df169d8e91d9a1d8326319eeb2cf281d16b0eba"
-
-express-promise-router@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/express-promise-router/-/express-promise-router-1.1.1.tgz#56ac3948c27c809bf32bd12948e1473a7610df69"
-  dependencies:
-    bluebird "^3.4.1"
-    lodash "^4.13.1"
-    methods "^1.0.0"
 
 express-promise@^0.4.0:
   version "0.4.0"
@@ -990,10 +978,6 @@ lodash.restparam@^3.0.0:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/lodash.restparam/-/lodash.restparam-3.6.1.tgz#936a4e309ef330a7645ed4145986c85ae5b20805"
 
-lodash@^4.13.1:
-  version "4.17.4"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
-
 lowercase-keys@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/lowercase-keys/-/lowercase-keys-1.0.0.tgz#4e3366b39e7f5457e35f1324bdf6f88d0bfc7306"
@@ -1010,7 +994,7 @@ merge-descriptors@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/merge-descriptors/-/merge-descriptors-1.0.1.tgz#b00aaa556dd8b44568150ec9d1b953f3f90cbb61"
 
-methods@^1.0.0, methods@~1.1.2:
+methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
 
