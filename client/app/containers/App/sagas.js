@@ -1,4 +1,5 @@
-import { take, call, put, cancel, takeEvery, takeLatest } from 'redux-saga/effects';
+import { eventChannel } from 'redux-saga';
+import { fork, take, call, put, cancel, takeEvery, takeLatest } from 'redux-saga/effects';
 
 import request from 'utils/request';
 
@@ -6,6 +7,18 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 import { SEND_PLAYBACK_COMMAND, LOAD_NOWPLAYING } from 'containers/App/constants';
 
 import { nowPlayingLoaded, nowPlayingLoadingError } from './actions';
+
+import Primus from '../../../primus';
+
+
+function connect() {
+  const primus = Primus.connect('http://localhost:3030');
+  return new Promise((resolve) => {
+    primus.on('open', () => {
+      resolve(primus);
+    });
+  });
+}
 
 export function* sendPlaybackCommand(action) {
   const requestURL = 'http://localhost:3030/playback';
@@ -61,8 +74,46 @@ export function* loadNowPlayingWatcher() {
   yield cancel(watcher);
 }
 
+function subscribe(primus) {
+  return eventChannel((emit) => {
+    primus.on('data', (data) => {
+      switch (data.event) {
+        case 'changed-player':
+          emit(nowPlayingLoaded(data.payload));
+          break;
+        default:
+          console.log('Unknown event', event); // eslint-disable-line no-console
+      }
+    });
+    return () => {};
+  });
+}
+
+function* read(primus) {
+  const channel = yield call(subscribe, primus);
+  while (true) { // eslint-disable-line no-constant-condition
+    const action = yield take(channel);
+    yield put(action);
+  }
+}
+
+function* handleIO(primus) {
+  yield fork(read, primus);
+}
+
+function* flow() {
+  const primus = yield call(connect);
+
+  yield fork(handleIO, primus);
+}
+
+function* primusWatcher() {
+  yield fork(flow);
+}
+
 // Bootstrap sagas
 export default [
   playbackCommandWatcher,
   loadNowPlayingWatcher,
+  primusWatcher,
 ];

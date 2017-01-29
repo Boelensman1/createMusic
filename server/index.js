@@ -8,6 +8,7 @@ const cors = require('cors')
 
 const server = require('http').createServer(app);
 const primus = new Primus(server);
+// primus.save(__dirname +'/primus.js');
 
 const MPC = require('mpc-js').MPC;
 const mpc = new MPC();
@@ -28,8 +29,8 @@ if (process.env.NODE_ENV === 'development') {
 
 primus.on('connection', function connection(spark) {
     console.log('new connection');
-    spark.write({ Welcome: 'Hello!' });
 });
+
 
 const playlistRoute = require('./routes/playlists');
 const artistRoute = require('./routes/artists');
@@ -42,6 +43,13 @@ app.use(playbackRoute);
 mpc.connectTCP('mainpc', 6600);
 mpc.on('ready', () => {
   console.log('Connection to mpd established');
+
+  mpc.on('changed-player', () => {
+    mpc.status.status().then(status => {
+      primus.write({event: 'changed-player', payload: status});
+    });
+  });
+
   server.listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
   });

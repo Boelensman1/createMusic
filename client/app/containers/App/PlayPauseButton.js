@@ -11,6 +11,7 @@ import { sendPlaybackCommand } from './actions';
 
 export class PlayPauseButton extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
+    sendPlaybackCommand: React.PropTypes.func,
     playState: React.PropTypes.oneOfType([
       React.PropTypes.string,
       React.PropTypes.bool,
@@ -20,13 +21,11 @@ export class PlayPauseButton extends React.PureComponent { // eslint-disable-lin
   constructor(props) {
     super(props);
 
-    const { sendPlaybackCommand } = props;
-    this.play = sendPlaybackCommand.bind(this, 'play');
-    this.pause = sendPlaybackCommand.bind(this, 'pause');
+    this.play = this.props.sendPlaybackCommand.bind(this, 'play');
+    this.pause = this.props.sendPlaybackCommand.bind(this, 'pause');
   }
   render() {
     const { playState } = this.props;
-    console.log(playState === 'play');
     return (
       <button onClick={playState === 'play' ? this.pause : this.play}>
         {playState === 'play' ? 'pause' : 'play'}

@@ -43,8 +43,7 @@ export default function configureStore(initialState = {}, history) {
   );
 
   // Extensions
-  sagaMiddleware.run(globalSagas[0]); // run global saga from 'containers/App/sagas'
-  sagaMiddleware.run(globalSagas[1]); // run global saga from 'containers/App/sagas'
+  globalSagas.map(sagaMiddleware.run); // run global saga from 'containers/App/sagas'
   store.runSaga = sagaMiddleware.run;
   store.asyncReducers = {}; // Async reducer registry
 
