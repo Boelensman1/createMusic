@@ -1,47 +1,25 @@
 {
-  "name": "playMusic",
-  "description": "Musicplayer for mpd",
-  "version": "0.0.0",
-  "homepage": "",
-  "main": "src/",
-  "keywords": [
-    "feathers"
-  ],
+  "name": "playMusicServer",
+  "version": "0.0.1",
+  "description": "Server for the playMusic mpd client",
+  "main": "index.js",
+  "repository": "https://github.com/Boelensman1/playMusic.git",
+  "author": "Wigger Boelens",
   "license": "MIT",
-  "repository": {},
-  "author": {},
-  "contributors": [],
-  "bugs": {},
-  "engines": {
-    "node": ">= 0.12.0"
-  },
   "scripts": {
-    "test": "npm run eslint && npm run mocha",
-    "test:watch": "nodemon --exec 'npm run mocha'",
-    "eslint": "eslint src/. test/.",
-    "start": "node src/",
-    "dev": "nodemon src/",
-    "mocha": "mocha test/ --recursive"
+    "dev": "nodemon ."
   },
   "dependencies": {
-    "body-parser": "1.16.0",
-    "compression": "1.6.2",
-    "cors": "2.8.1",
-    "feathers": "2.0.3",
-    "feathers-configuration": "0.3.3",
-    "feathers-errors": "2.5.0",
-    "feathers-hooks": "1.7.1",
-    "feathers-react-redux": "0.5.0",
-    "feathers-rest": "1.6.0",
-    "feathers-socketio": "1.4.2",
+    "body-parser": "^1.16.0",
+    "errorhandler": "^1.5.0",
+    "express": "^4.14.1",
+    "express-mung": "^0.4.6",
+    "express-promise": "^0.4.0",
     "mpc-js": "^1.0.0",
-    "serve-favicon": "2.3.2",
-    "winston": "2.3.1"
+    "primus": "^6.0.8",
+    "ws": "^1.1.1"
   },
   "devDependencies": {
-    "jshint": "2.9.4",
-    "mocha": "3.2.0",
-    "request": "2.79.0",
-    "request-promise": "^4.1.1"
+    "nodemon": "^1.11.0"
   }
 }
