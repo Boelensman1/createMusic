@@ -12,7 +12,6 @@ const CurrentPlayingControllerDiv = styled.div`
 const ControllerContainer = styled.div`
   position: absolute;
   bottom: 0px;
-  height: 10%;
   width: 100%;
   /* RGBa with 0.6 opacity */
   background-color: rgba(0, 0, 0, 0.6);

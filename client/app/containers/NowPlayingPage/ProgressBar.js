@@ -9,6 +9,14 @@ import { makeSelectIsPlaying, makeSelectTimingInfo } from 'containers/App/select
 
 import { sendPlaybackCommand } from 'containers/App/actions';
 
+const ProgressBarDiv = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const TimingSpan = styled.span`
+  color: white;
+`;
 const Meter = styled.div`
   height: 5px;
   background: #555;
@@ -21,6 +29,18 @@ const Meter = styled.div`
     overflow: hidden;
   }
 `;
+const MeterContainer = styled.div`
+  flex: 1;
+  padding-left: 1em;
+  padding-right: 1em;
+`;
+
+const pad = (n) => {
+  const width = 2;
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
+}
+const toTime = (seconds) => (`${pad(Math.floor(seconds/60))}:${pad(Math.round(seconds % 60))}`)
 
 export class ProgressBar extends React.Component {
   static propTypes = {
@@ -52,7 +72,7 @@ export class ProgressBar extends React.Component {
 
   startCounting() {
     if (!this._timer) {
-      this._timer = setInterval(this.doCount.bind(this), 2000);
+      this._timer = setInterval(this.doCount.bind(this), 1000);
     }
   }
 
@@ -65,7 +85,7 @@ export class ProgressBar extends React.Component {
 
   doCount() {
     const { startCountDate } = this.state;
-    const { initialElapsed } = this.props;
+    const initialElapsed = this.props.durationAndElapsed.elapsed;
     const secondsDifference = (new Date().getTime() - startCountDate.getTime()) / 1000;
     this.setState({ elapsed: initialElapsed + secondsDifference });
   }
@@ -81,13 +101,20 @@ export class ProgressBar extends React.Component {
   }
 
   render() {
+    const elapsed = this.state.elapsed;
     const { duration } = this.props.durationAndElapsed;
 
-    const progress = (this.state.elapsed / duration) * 100;
+    const progress = (elapsed / duration) * 100;
     return (
-      <Meter onClick={this._scrub} ref={(div) => { this.clickTarget = div; }} >
-        <span style={{ width: `${progress}%` }}></span>
-      </Meter>
+      <ProgressBarDiv>
+        <TimingSpan>{toTime(elapsed)}</TimingSpan>
+          <MeterContainer>
+            <Meter onClick={this._scrub} ref={(div) => { this.clickTarget = div; }} >
+              <span style={{ width: `${progress}%` }}></span>
+            </Meter>
+          </MeterContainer>
+        <TimingSpan>{toTime(duration)}</TimingSpan>
+      </ProgressBarDiv>
     );
   }
 }
