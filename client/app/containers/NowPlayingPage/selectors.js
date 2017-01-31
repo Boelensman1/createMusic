@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
 
+const selectGlobal = (state) => state.get('global');
+
 /**
  * Direct selector to the nowPlayingPage state domain
  */
@@ -23,18 +25,24 @@ const makeSelectError = () => createSelector(
   (substate) => substate.get('error')
 );
 
-/**
- * Default selector used by NowPlayingPage
- */
-const makeSelectNowPlayingPage = () => createSelector(
+const makeSelectNowPlaying = () => createSelector(
+  selectGlobal,
   selectNowPlayingPageDomain(),
-  (substate) => substate.toJS()
+  (globalState, substate) => {
+    const nowPlaying = globalState.get('nowPlaying');
+    const activePlaylistContent = substate.get('activePlaylistContents');
+    if (!nowPlaying || !activePlaylistContent) { return false; }
+    const currentSong = activePlaylistContent[nowPlaying.song];
+    currentSong.duration = nowPlaying.duration; // more precise
+    currentSong.elapsed = nowPlaying.elapsed;
+    return currentSong;
+  }
 );
 
-export default makeSelectNowPlayingPage;
+
 export {
-  selectNowPlayingPageDomain,
   makeSelectActivePlaylistContents,
   makeSelectLoading,
+  makeSelectNowPlaying,
   makeSelectError,
 };

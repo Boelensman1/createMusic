@@ -10,14 +10,16 @@ import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 
-import PlayPauseButton from 'containers/App/PlayPauseButton';
-
 import { makeSelectNowPlayingId } from 'containers/App/selectors';
+
+import CurrentPlayingController from './CurrentPlayingController';
+
 
 import {
   makeSelectActivePlaylistContents,
   makeSelectLoading,
   makeSelectError,
+  makeSelectNowPlaying,
 } from './selectors';
 
 import messages from './messages';
@@ -36,6 +38,10 @@ export class NowPlayingPage extends React.PureComponent { // eslint-disable-line
       React.PropTypes.number,
       React.PropTypes.bool,
     ]),
+    nowPlaying: React.PropTypes.oneOfType([
+      React.PropTypes.object,
+      React.PropTypes.bool,
+    ]),
     activePlaylistContents: React.PropTypes.oneOfType([
       React.PropTypes.array,
       React.PropTypes.bool,
@@ -48,7 +54,7 @@ export class NowPlayingPage extends React.PureComponent { // eslint-disable-line
   }
 
   render() {
-    const { loading, activePlaylistContents, nowPlayingId, error } = this.props;
+    const { loading, activePlaylistContents, nowPlaying, nowPlayingId, error } = this.props;
 
     return (
       <div>
@@ -58,7 +64,7 @@ export class NowPlayingPage extends React.PureComponent { // eslint-disable-line
             { name: 'description', content: 'Description of NowPlayingPage' },
           ]}
         />
-        <PlayPauseButton />
+        <CurrentPlayingController nowPlaying={nowPlaying} />
         <NowPlayingList
           loading={loading}
           activePlaylistContents={activePlaylistContents}
@@ -74,6 +80,7 @@ export class NowPlayingPage extends React.PureComponent { // eslint-disable-line
 const mapStateToProps = createStructuredSelector({
   activePlaylistContents: makeSelectActivePlaylistContents(),
   nowPlayingId: makeSelectNowPlayingId(),
+  nowPlaying: makeSelectNowPlaying(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
 });

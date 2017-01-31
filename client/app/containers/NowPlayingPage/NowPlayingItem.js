@@ -25,7 +25,7 @@ function NowPlayingItem({ item, nowPlaying }) {
   return (
     <Item>
       <AlbumArt src={item.albumArt} />
-      <Title>{item.title} {nowPlaying && 'NOWPLAYING'}</Title>
+      <Title nowPlaying={nowPlaying}>{item.title}</Title>
       <Artist>{item.artist}</Artist>
     </Item>
   );

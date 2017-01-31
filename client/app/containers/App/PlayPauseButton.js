@@ -6,6 +6,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import FontAwesome from 'react-fontawesome';
+
 import { makeSelectPlayState } from './selectors';
 import { sendPlaybackCommand } from './actions';
 
@@ -24,11 +26,12 @@ export class PlayPauseButton extends React.PureComponent { // eslint-disable-lin
     this.play = this.props.sendPlaybackCommand.bind(this, 'play');
     this.pause = this.props.sendPlaybackCommand.bind(this, 'pause');
   }
+
   render() {
     const { playState } = this.props;
     return (
       <button onClick={playState === 'play' ? this.pause : this.play}>
-        {playState === 'play' ? 'pause' : 'play'}
+        {playState === 'play' ? <FontAwesome name="pause-circle-o" size="2x" /> : <FontAwesome name="play-circle" />}
       </button>
     );
   }

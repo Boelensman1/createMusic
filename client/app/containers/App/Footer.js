@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import styled from 'styled-components';
 
 const FooterDiv = styled.div`
@@ -10,7 +11,7 @@ const FooterDiv = styled.div`
 function Footer() {
   return (
     <FooterDiv>
-      Footer
+      <Link to="nowPlaying">now playing</Link>
     </FooterDiv>
   );
 }

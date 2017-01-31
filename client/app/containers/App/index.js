@@ -31,6 +31,9 @@ const Content = styled.div`
   position: relative; /* need this to position inner content */
   overflow-y: auto;
   padding: 1em;
+  @media (max-width: 500px) {
+    font-size: 10pt;
+  }
 `;
 
 
