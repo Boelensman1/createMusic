@@ -7,7 +7,13 @@ import styled from 'styled-components';
 
 import { makeSelectIsPlaying, makeSelectTimingInfo } from 'containers/App/selectors';
 
+import PlayPauseButton from 'containers/App/PlayPauseButton';
+
 import { sendPlaybackCommand } from 'containers/App/actions';
+
+const PlayPauseButtonContainer = styled.span`
+  height: 20px;
+`;
 
 const ProgressBarDiv = styled.div`
   display: flex;
@@ -56,7 +62,6 @@ export class ProgressBar extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     const { elapsed } = nextProps.durationAndElapsed;
     this.setState({ elapsed, startCountDate: new Date() });
     if (nextProps.isPlaying) {
@@ -114,6 +119,9 @@ export class ProgressBar extends React.Component {
             </Meter>
           </MeterContainer>
         <TimingSpan>{toTime(duration)}</TimingSpan>
+        <PlayPauseButtonContainer>
+          <PlayPauseButton />
+        </PlayPauseButtonContainer>
       </ProgressBarDiv>
     );
   }

@@ -33,10 +33,14 @@ router.post('/playback/:command', (req, res) => {
       case 'previous':
         return res.json(mpc.playback.previous().then(() => undefined));
 
+      case 'playId':
+        const songId = req.body.songId;
+        if (!songId) { return res.status(400).end() }
+        return res.json(mpc.playback.playId(songId).then(() => undefined));
+
       case 'seekInCurrent':
         const time = req.body.time;
         if (!time) { return res.status(400).end() }
-        console.log(time);
         return res.json(mpc.playback.seekCur(time).then(() => undefined));
 
       default:

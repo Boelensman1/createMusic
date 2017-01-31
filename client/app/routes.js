@@ -44,16 +44,17 @@ export default function createRoutes(store) {
       name: 'nowPlayingPage',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
-          import('containers/NowPlayingPage/reducer'),
-          import('containers/NowPlayingPage/sagas'),
+          // import('containers/NowPlayingPage/reducer'),
+          // import('containers/NowPlayingPage/sagas'),
           import('containers/NowPlayingPage'),
         ]);
 
         const renderRoute = loadModule(cb);
 
-        importModules.then(([reducer, sagas, component]) => {
-          injectReducer('nowPlayingPage', reducer.default);
-          injectSagas(sagas.default);
+        // importModules.then(([reducer, sagas, component]) => {
+          // injectReducer('nowPlayingPage', reducer.default);
+          // injectSagas(sagas.default);
+        importModules.then(([component]) => {
           renderRoute(component);
         });
 

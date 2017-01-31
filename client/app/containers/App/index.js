@@ -18,7 +18,7 @@ import styled from 'styled-components';
 import Header from './Header';
 import Footer from './Footer';
 
-import { loadNowPlaying } from './actions';
+import { loadNowPlaying, loadActivePlayList } from './actions';
 
 const Page = styled.div`
   display: flex;
@@ -41,10 +41,12 @@ class App extends React.PureComponent { // eslint-disable-line react/prefer-stat
   static propTypes = {
     children: React.PropTypes.node,
     loadNowPlaying: React.PropTypes.func.isRequired,
+    loadActivePlaylist: React.PropTypes.func.isRequired,
   };
 
   componentWillMount() {
     this.props.loadNowPlaying();
+    this.props.loadActivePlaylist();
   }
 
   render() {
@@ -63,6 +65,7 @@ class App extends React.PureComponent { // eslint-disable-line react/prefer-stat
 function mapDispatchToProps(dispatch) {
   return {
     loadNowPlaying: () => dispatch(loadNowPlaying()),
+    loadActivePlaylist: () => dispatch(loadActivePlayList()),
   };
 }
 

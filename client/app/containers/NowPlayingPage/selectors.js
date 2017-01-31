@@ -31,7 +31,8 @@ const makeSelectNowPlaying = () => createSelector(
   (globalState, substate) => {
     const nowPlaying = globalState.get('nowPlaying');
     const activePlaylistContent = substate.get('activePlaylistContents');
-    if (!nowPlaying || !activePlaylistContent) { return false; }
+    if (!nowPlaying || !activePlaylistContent || nowPlaying.song === null) { return false; }
+    console.log(activePlaylistContent, nowPlaying.song)
     const currentSong = activePlaylistContent[nowPlaying.song];
     currentSong.duration = nowPlaying.duration; // more precise
     currentSong.elapsed = nowPlaying.elapsed;

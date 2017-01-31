@@ -1,5 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import styled from 'styled-components';
+
+import { makeSelectNowPlayingId } from 'containers/App/selectors';
 
 const Item = styled.li`
   height: 3.6em;
@@ -7,6 +11,7 @@ const Item = styled.li`
 
 const Title = styled.div`
   font-size: 1.3em;
+  ${(props) => props.nowPlaying ? 'color: red' : ''}
 `;
 
 const Artist = styled.div`
@@ -21,19 +26,38 @@ const AlbumArt = styled.img`
   margin-right: 1em;
 `;
 
-function NowPlayingItem({ item, nowPlaying }) {
-  return (
-    <Item>
-      <AlbumArt src={item.albumArt} />
-      <Title nowPlaying={nowPlaying}>{item.title}</Title>
-      <Artist>{item.artist}</Artist>
-    </Item>
-  );
+// eslint-disable-next-line react/prefer-stateless-function
+export class NowPlayingItem extends React.PureComponent {
+  static propTypes = {
+    item: React.PropTypes.object.isRequired,
+    play: React.PropTypes.func.isRequired,
+    nowPlayingId: React.PropTypes.oneOfType([
+      React.PropTypes.number,
+      React.PropTypes.bool,
+    ]),
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const { item, nowPlayingId } = this.props;
+    const { item: newItem, nowPlayingId: newNowPlayingId } = nextProps;
+
+    return (item !== newItem || item.id === nowPlayingId || newItem.id === newNowPlayingId);
+  }
+
+  render() {
+    const { item, nowPlayingId, play } = this.props;
+    return (
+      <Item onClick={() => play(item.id)}>
+        <AlbumArt src={item.albumArt} />
+        <Title nowPlaying={nowPlayingId === item.id}>{item.title}</Title>
+        <Artist>{item.artist}</Artist>
+      </Item>
+    );
+  }
 }
 
-NowPlayingItem.propTypes = {
-  item: React.PropTypes.object.isRequired,
-  nowPlaying: React.PropTypes.bool.isRequired,
-};
+const mapStateToProps = createStructuredSelector({
+  nowPlayingId: makeSelectNowPlayingId(),
+});
 
-export default NowPlayingItem;
+export default connect(mapStateToProps)(NowPlayingItem);

@@ -3,13 +3,23 @@
  */
 
 import React from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+
+import pauseIcon from './icons/pause.svg';
+import playIcon from './icons/play.svg';
 
 import FontAwesome from 'react-fontawesome';
 
 import { makeSelectIsPlaying } from './selectors';
 import { sendPlaybackCommand } from './actions';
+
+const PlayButton = styled.div`
+  padding-top: 0.1em;
+  width: 3em;
+  margin-left: 1em;
+`;
 
 export class PlayPauseButton extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
@@ -23,13 +33,14 @@ export class PlayPauseButton extends React.PureComponent { // eslint-disable-lin
     this.play = this.props.sendPlaybackCommand.bind(this, 'play');
     this.pause = this.props.sendPlaybackCommand.bind(this, 'pause');
   }
+  // <FontAwesome name={isPlaying ? 'pause-circle' : 'play-circle'} size="3x" />
 
   render() {
     const { isPlaying } = this.props;
     return (
-      <button onClick={isPlaying ? this.pause : this.play}>
-        <FontAwesome name={isPlaying ? 'pause-circle-o' : 'play-circle'} size="2x" /> :
-      </button>
+      <PlayButton onClick={isPlaying ? this.pause : this.play}>
+        <img src={isPlaying ? pauseIcon : playIcon} />
+      </PlayButton>
     );
   }
 }

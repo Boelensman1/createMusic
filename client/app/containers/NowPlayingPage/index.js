@@ -10,20 +10,15 @@ import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 
-import { makeSelectNowPlayingId } from 'containers/App/selectors';
-
-import CurrentPlayingController from './CurrentPlayingController';
-
-
 import {
-  makeSelectActivePlaylistContents,
   makeSelectLoading,
   makeSelectError,
   makeSelectNowPlaying,
-} from './selectors';
+} from 'containers/App/selectors';
+
+import CurrentPlayingController from './CurrentPlayingController';
 
 import messages from './messages';
-import { loadActivePlayList } from './actions';
 
 import NowPlayingList from './NowPlayingList';
 
@@ -34,27 +29,15 @@ export class NowPlayingPage extends React.PureComponent { // eslint-disable-line
       React.PropTypes.object,
       React.PropTypes.bool,
     ]),
-    nowPlayingId: React.PropTypes.oneOfType([
-      React.PropTypes.number,
-      React.PropTypes.bool,
-    ]),
     nowPlaying: React.PropTypes.oneOfType([
       React.PropTypes.object,
       React.PropTypes.bool,
     ]),
-    activePlaylistContents: React.PropTypes.oneOfType([
-      React.PropTypes.array,
-      React.PropTypes.bool,
-    ]),
-    loadActivePlaylist: React.PropTypes.func.isRequired,
-  }
-
-  componentWillMount() {
-    this.props.loadActivePlaylist();
+    isPlaying: React.PropTypes.bool,
   }
 
   render() {
-    const { loading, activePlaylistContents, nowPlaying, nowPlayingId, isPlaying, error } = this.props;
+    const { loading, nowPlaying, isPlaying, error } = this.props;
 
     return (
       <div>
@@ -67,8 +50,6 @@ export class NowPlayingPage extends React.PureComponent { // eslint-disable-line
         <CurrentPlayingController nowPlaying={nowPlaying} isPlaying={isPlaying} />
         <NowPlayingList
           loading={loading}
-          activePlaylistContents={activePlaylistContents}
-          nowPlayingId={nowPlayingId}
           error={error}
         />
         <FormattedMessage {...messages.header} />
@@ -78,17 +59,9 @@ export class NowPlayingPage extends React.PureComponent { // eslint-disable-line
 }
 
 const mapStateToProps = createStructuredSelector({
-  activePlaylistContents: makeSelectActivePlaylistContents(),
-  nowPlayingId: makeSelectNowPlayingId(),
   nowPlaying: makeSelectNowPlaying(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    loadActivePlaylist: () => dispatch(loadActivePlayList()),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NowPlayingPage);
+export default connect(mapStateToProps)(NowPlayingPage);

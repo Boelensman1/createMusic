@@ -36,7 +36,7 @@ const makeSelectTimingInfo = () => createSelector(
 
 const makeSelectNowPlayingId = () => createSelector(
   selectGlobal,
-  (globalState) => globalState.get('nowPlaying') && globalState.get('nowPlaying').song
+  (globalState) => globalState.get('nowPlaying') && globalState.get('nowPlaying').songId
 );
 
 const makeSelectLocationState = () => {
@@ -55,6 +55,30 @@ const makeSelectLocationState = () => {
   };
 };
 
+const makeSelectActivePlaylistContents = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.get('activePlaylistContents')
+);
+
+const makeSelectNowPlaying = () => createSelector(
+  selectGlobal,
+  (globalState) => {
+    const nowPlaying = globalState.get('nowPlaying');
+    const activePlaylistContent = globalState.get('activePlaylistContents');
+    if (
+      !nowPlaying ||
+      !activePlaylistContent ||
+      activePlaylistContent.length === 0 ||
+      nowPlaying.song === null) {
+      return false;
+    }
+    const currentSong = activePlaylistContent[nowPlaying.song];
+    currentSong.duration = nowPlaying.duration; // more precise
+    currentSong.elapsed = nowPlaying.elapsed;
+    return currentSong;
+  }
+);
+
 export {
   selectGlobal,
   makeSelectLoading,
@@ -64,4 +88,6 @@ export {
   makeSelectIsPlaying,
   makeSelectNowPlayingId,
   makeSelectTimingInfo,
+  makeSelectActivePlaylistContents,
+  makeSelectNowPlaying,
 };

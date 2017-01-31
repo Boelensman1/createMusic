@@ -4,9 +4,16 @@ import { fork, take, call, put, cancel, takeEvery, takeLatest } from 'redux-saga
 import request from 'utils/request';
 
 import { LOCATION_CHANGE } from 'react-router-redux';
-import { SEND_PLAYBACK_COMMAND, LOAD_NOWPLAYING } from 'containers/App/constants';
 
-import { nowPlayingLoaded, nowPlayingLoadingError } from './actions';
+import { SEND_PLAYBACK_COMMAND, LOAD_NOWPLAYING, LOAD_ACTIVE_PLAYLIST } from './constants';
+
+import {
+  nowPlayingLoaded,
+  nowPlayingLoadingError,
+  loadActivePlayList,
+  activePlayListLoaded,
+  activePlayListLoadingError,
+} from './actions';
 
 import Primus from '../../../primus';
 
@@ -87,6 +94,9 @@ function subscribe(primus) {
         case 'changed-player':
           emit(nowPlayingLoaded(data.payload));
           break;
+        case 'changed-playlist':
+          emit(loadActivePlayList());
+          break;
         default:
           console.log('Unknown event', event); // eslint-disable-line no-console
       }
@@ -117,9 +127,38 @@ function* primusWatcher() {
   yield fork(flow);
 }
 
+
+export function* getActivePlaylistContents() {
+  const requestURL = 'http://localhost:3030/playlists/current';
+
+  try {
+    // Call our request helper (see 'utils/request')
+    const activePlaylistContents = yield call(request, requestURL);
+    yield put(activePlayListLoaded(activePlaylistContents));
+  } catch (err) {
+    yield put(activePlayListLoadingError(err));
+  }
+}
+
+/**
+ * Root saga manages watcher lifecycle
+ */
+export function* activePlayListData() {
+  // Watches for LOAD_ACTIVE_PLAYLIST actions and calls getActivePlayListContents
+  // when one comes in. By using `takeLatest` only the result of the latest API call is applied.
+  // It returns task descriptor (just like fork) so we can continue execution
+  const watcher = yield takeLatest(LOAD_ACTIVE_PLAYLIST, getActivePlaylistContents);
+
+  // Suspend execution until location changes
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+}
+
+
 // Bootstrap sagas
 export default [
   playbackCommandWatcher,
   loadNowPlayingWatcher,
   primusWatcher,
+  activePlayListData,
 ];
