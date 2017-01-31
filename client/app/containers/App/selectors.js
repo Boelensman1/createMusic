@@ -21,9 +21,17 @@ const makeSelectArtistList = () => createSelector(
   (globalState) => globalState.get('artistList')
 );
 
-const makeSelectPlayState = () => createSelector(
+const makeSelectIsPlaying = () => createSelector(
   selectGlobal,
-  (globalState) => globalState.get('nowPlaying') && globalState.get('nowPlaying').state
+  (globalState) => globalState.get('nowPlaying') && globalState.get('nowPlaying').state === 'play'
+);
+
+const makeSelectTimingInfo = () => createSelector(
+  selectGlobal,
+  (globalState) => (globalState.get('nowPlaying') && {
+    elapsed: globalState.get('nowPlaying').elapsed,
+    duration: globalState.get('nowPlaying').duration,
+  })
 );
 
 const makeSelectNowPlayingId = () => createSelector(
@@ -53,6 +61,7 @@ export {
   makeSelectError,
   makeSelectArtistList,
   makeSelectLocationState,
-  makeSelectPlayState,
+  makeSelectIsPlaying,
   makeSelectNowPlayingId,
+  makeSelectTimingInfo,
 };

@@ -21,13 +21,19 @@ function connect() {
 }
 
 export function* sendPlaybackCommand(action) {
-  const requestURL = 'http://localhost:3030/playback';
+  const { command, payload } = action;
+  const requestBaseUrl = 'http://localhost:3030/playback';
+
+  const requestUrl = `${requestBaseUrl}/${command}`;
+
+  const options = { method: 'POST', headers: { 'Content-Type': 'application/json' } };
+  if (payload) {
+    options.body = JSON.stringify(payload);
+  }
 
   try {
     // Call our request helper (see 'utils/request')
-    yield call(request, `${requestURL}/${action.payload}`, {
-      method: 'POST',
-    });
+    yield call(request, requestUrl, options);
     // yield put(artistListLoaded(artistList));
   } catch (err) {
     // yield put(artistListLoadingError(err));

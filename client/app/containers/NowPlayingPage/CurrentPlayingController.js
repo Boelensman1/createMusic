@@ -34,7 +34,7 @@ export default class CurrentPlayingController extends React.PureComponent {
   }
 
   render() {
-    const { nowPlaying } = this.props;
+    const { nowPlaying, isPlaying } = this.props;
 
     return (
       <CurrentPlayingControllerDiv>
@@ -42,7 +42,7 @@ export default class CurrentPlayingController extends React.PureComponent {
         <ControllerContainer >
           {nowPlaying.title} - {nowPlaying.artist}
           <PlayPauseButton />
-          <ProgressBar initialElapsed={nowPlaying.elapsed} duration={nowPlaying.duration} />
+          <ProgressBar />
         </ControllerContainer>
       </CurrentPlayingControllerDiv>
     );

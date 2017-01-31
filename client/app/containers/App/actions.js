@@ -69,10 +69,11 @@ export function artistListLoadingError(error) {
  *
  * @return {object} An action object with a type of LOAD_ARTISTLIST
  */
-export function sendPlaybackCommand(command) {
+export function sendPlaybackCommand(command, payload) {
   return {
     type: SEND_PLAYBACK_COMMAND,
-    payload: command,
+    command,
+    payload,
   };
 }
 

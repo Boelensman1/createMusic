@@ -8,16 +8,13 @@ import { createStructuredSelector } from 'reselect';
 
 import FontAwesome from 'react-fontawesome';
 
-import { makeSelectPlayState } from './selectors';
+import { makeSelectIsPlaying } from './selectors';
 import { sendPlaybackCommand } from './actions';
 
 export class PlayPauseButton extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     sendPlaybackCommand: React.PropTypes.func,
-    playState: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.bool,
-    ]),
+    isPlaying: React.PropTypes.bool,
   };
 
   constructor(props) {
@@ -28,10 +25,10 @@ export class PlayPauseButton extends React.PureComponent { // eslint-disable-lin
   }
 
   render() {
-    const { playState } = this.props;
+    const { isPlaying } = this.props;
     return (
-      <button onClick={playState === 'play' ? this.pause : this.play}>
-        {playState === 'play' ? <FontAwesome name="pause-circle-o" size="2x" /> : <FontAwesome name="play-circle" />}
+      <button onClick={isPlaying ? this.pause : this.play}>
+        <FontAwesome name={isPlaying ? 'pause-circle-o' : 'play-circle'} size="2x" /> :
       </button>
     );
   }
@@ -45,7 +42,7 @@ export function mapDispatchToProps(dispatch) {
 
 
 const mapStateToProps = createStructuredSelector({
-  playState: makeSelectPlayState(),
+  isPlaying: makeSelectIsPlaying(),
 });
 
 // Wrap the component to inject dispatch and state into it

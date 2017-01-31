@@ -54,7 +54,7 @@ export class NowPlayingPage extends React.PureComponent { // eslint-disable-line
   }
 
   render() {
-    const { loading, activePlaylistContents, nowPlaying, nowPlayingId, error } = this.props;
+    const { loading, activePlaylistContents, nowPlaying, nowPlayingId, isPlaying, error } = this.props;
 
     return (
       <div>
@@ -64,7 +64,7 @@ export class NowPlayingPage extends React.PureComponent { // eslint-disable-line
             { name: 'description', content: 'Description of NowPlayingPage' },
           ]}
         />
-        <CurrentPlayingController nowPlaying={nowPlaying} />
+        <CurrentPlayingController nowPlaying={nowPlaying} isPlaying={isPlaying} />
         <NowPlayingList
           loading={loading}
           activePlaylistContents={activePlaylistContents}
