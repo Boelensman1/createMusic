@@ -19,7 +19,7 @@ import Primus from '../../../primus';
 
 
 function connect() {
-  const primus = Primus.connect('http://localhost:3030');
+  const primus = Primus.connect('http://mainpc:3030');
   return new Promise((resolve) => {
     primus.on('open', () => {
       resolve(primus);
@@ -29,7 +29,7 @@ function connect() {
 
 export function* sendPlaybackCommand(action) {
   const { command, payload } = action;
-  const requestBaseUrl = 'http://localhost:3030/playback';
+  const requestBaseUrl = 'http://mainpc:3030/playback';
 
   const requestUrl = `${requestBaseUrl}/${command}`;
 
@@ -62,7 +62,7 @@ export function* playbackCommandWatcher() {
 }
 
 export function* loadNowPlaying() {
-  const requestURL = 'http://localhost:3030/playback/status';
+  const requestURL = 'http://mainpc:3030/playback/status';
 
   try {
     // Call our request helper (see 'utils/request')
@@ -129,7 +129,7 @@ function* primusWatcher() {
 
 
 export function* getActivePlaylistContents() {
-  const requestURL = 'http://localhost:3030/playlists/current';
+  const requestURL = 'http://mainpc:3030/playlists/current';
 
   try {
     // Call our request helper (see 'utils/request')

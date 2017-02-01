@@ -7,7 +7,7 @@ import { artistListLoaded, artistListLoadingError } from 'containers/App/actions
 import request from 'utils/request';
 
 export function* getArtistList() {
-  const requestURL = 'http://localhost:3030/artists';
+  const requestURL = 'http://mainpc:3030/artists';
 
   try {
     // Call our request helper (see 'utils/request')
