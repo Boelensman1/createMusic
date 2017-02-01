@@ -46,7 +46,7 @@ const pad = (n) => {
   n = n + '';
   return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
 }
-const toTime = (seconds) => (`${pad(Math.floor(seconds/60))}:${pad(Math.round(seconds % 60))}`)
+const toTime = (seconds) => (`${pad(Math.floor(seconds/60))}:${pad(Math.floor(seconds % 60))}`)
 
 export class ProgressBar extends React.Component {
   static propTypes = {
