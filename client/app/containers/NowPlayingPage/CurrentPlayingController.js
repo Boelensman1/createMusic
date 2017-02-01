@@ -5,22 +5,34 @@ import ProgressBar from './ProgressBar';
 
 const CurrentPlayingControllerDiv = styled.div`
   position: relative;
+  @media (min-width: 500px) {
+    display: flex;
+    align-items: flex-end;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
 `;
 
 const ControllerContainer = styled.div`
-  position: absolute;
+  @media (max-width: 500px) {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
   bottom: 0px;
   width: 100%;
   padding-left: 0.5em;
   padding-right: 0.5em;
   /* RGBa with 0.6 opacity */
-  background-color: rgba(0, 0, 0, 0.6);
 `;
 
 const BackgroundImg = styled.div`
   background-image: url("${(props) => props.src}");
   background-size: cover;
   padding-top: 100%;
+  @media (min-width: 500px) {
+    padding-top: 0%;
+    width: 7rem;
+    height: 7rem;
+  }
 `;
 
 const TitleInfo = styled.div`
