@@ -1,3 +1,4 @@
+import { serverUrl } from 'config';
 import { take, call, put, cancel, takeLatest } from 'redux-saga/effects';
 
 import { LOCATION_CHANGE } from 'react-router-redux';
@@ -7,7 +8,7 @@ import { artistListLoaded, artistListLoadingError } from 'containers/App/actions
 import request from 'utils/request';
 
 export function* getArtistList() {
-  const requestURL = 'http://mainpc:3030/artists';
+  const requestURL = `${serverUrl}/artists`;
 
   try {
     // Call our request helper (see 'utils/request')

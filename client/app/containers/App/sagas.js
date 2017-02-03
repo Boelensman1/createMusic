@@ -1,3 +1,5 @@
+import { serverUrl } from 'config';
+
 import { eventChannel } from 'redux-saga';
 import { fork, take, call, put, cancel, takeEvery, takeLatest } from 'redux-saga/effects';
 
@@ -19,7 +21,7 @@ import Primus from '../../../primus';
 
 
 function connect() {
-  const primus = Primus.connect('http://mainpc:3030');
+  const primus = Primus.connect(serverUrl);
   return new Promise((resolve) => {
     primus.on('open', () => {
       resolve(primus);
@@ -29,9 +31,8 @@ function connect() {
 
 export function* sendPlaybackCommand(action) {
   const { command, payload } = action;
-  const requestBaseUrl = 'http://mainpc:3030/playback';
 
-  const requestUrl = `${requestBaseUrl}/${command}`;
+  const requestUrl = `${serverUrl}/playback/${command}`;
 
   const options = { method: 'POST', headers: { 'Content-Type': 'application/json' } };
   if (payload) {
@@ -62,7 +63,7 @@ export function* playbackCommandWatcher() {
 }
 
 export function* loadNowPlaying() {
-  const requestURL = 'http://mainpc:3030/playback/status';
+  const requestURL = `${serverUrl}/playback/status`;
 
   try {
     // Call our request helper (see 'utils/request')
@@ -129,7 +130,7 @@ function* primusWatcher() {
 
 
 export function* getActivePlaylistContents() {
-  const requestURL = 'http://mainpc:3030/playlists/current';
+  const requestURL = `${serverUrl}/playlists/current`;
 
   try {
     // Call our request helper (see 'utils/request')
