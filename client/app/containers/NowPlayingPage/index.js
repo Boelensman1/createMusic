@@ -7,7 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 
 import {
@@ -52,7 +52,6 @@ export class NowPlayingPage extends React.PureComponent { // eslint-disable-line
           loading={loading}
           error={error}
         />
-        <FormattedMessage {...messages.header} />
       </div>
     );
   }
