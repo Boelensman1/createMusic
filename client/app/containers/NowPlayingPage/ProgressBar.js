@@ -41,38 +41,51 @@ const MeterContainer = styled.div`
   padding-right: 1em;
 `;
 
-const pad = (n) => {
+const pad = (number) => {
   const width = 2;
-  n = n + '';
-  return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
-}
-const toTime = (seconds) => (`${pad(Math.floor(seconds/60))}:${pad(Math.floor(seconds % 60))}`)
+  const n = String(number);
+  return n.length >= width ? n : new Array(width - (n.length - 1)).join('0') + n;
+};
+
+const toTime = (seconds) => (`${pad(Math.floor(seconds / 60))}:${pad(Math.floor(seconds % 60))}`);
 
 export class ProgressBar extends React.Component {
   static propTypes = {
     initialElapsed: React.PropTypes.number, // eslint-disable-line react/no-unused-prop-types
-    duration: React.PropTypes.number,
     sendSeekCommand: React.PropTypes.func,
+    isPlaying: React.PropTypes.bool,
+    durationAndElapsed: React.PropTypes.oneOfType([
+      React.PropTypes.object,
+      React.PropTypes.bool,
+    ]),
   };
 
   constructor(props) {
     super(props);
     this.state = ({ elapsed: 0, startCountDate: new Date() });
     this._scrub = this.scrub.bind(this);
+
+    const { durationAndElapsed: { elapsed }, isPlaying } = props;
+    this.state = { elapsed, startCountDate: new Date() };
+    this.startOrStopCounting(isPlaying);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { elapsed } = nextProps.durationAndElapsed;
+    const { durationAndElapsed: { elapsed }, isPlaying } = nextProps;
     this.setState({ elapsed, startCountDate: new Date() });
-    if (nextProps.isPlaying) {
-      this.startCounting();
-    } else {
-      this.stopCounting();
-    }
+    this.startOrStopCounting(isPlaying);
   }
 
   componentWillUnmount() {
     this.stopCounting();
+  }
+
+  startOrStopCounting(isPlaying) {
+    if (isPlaying) {
+      this.startCounting();
+    } else {
+      this.stopCounting();
+    }
   }
 
   startCounting() {
@@ -113,11 +126,11 @@ export class ProgressBar extends React.Component {
     return (
       <ProgressBarDiv>
         <TimingSpan>{toTime(elapsed)}</TimingSpan>
-          <MeterContainer>
-            <Meter onClick={this._scrub} ref={(div) => { this.clickTarget = div; }} >
-              <span style={{ width: `${progress}%` }}></span>
-            </Meter>
-          </MeterContainer>
+        <MeterContainer>
+          <Meter onClick={this._scrub} ref={(div) => { this.clickTarget = div; }} >
+            <span style={{ width: `${progress}%` }}></span>
+          </Meter>
+        </MeterContainer>
         <TimingSpan>{toTime(duration)}</TimingSpan>
         <PlayPauseButtonContainer>
           <PlayPauseButton />
@@ -129,7 +142,9 @@ export class ProgressBar extends React.Component {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    sendSeekCommand: (time) => dispatch(sendPlaybackCommand('seekInCurrent', {time: time})),
+    sendSeekCommand: (time) => (
+      dispatch(sendPlaybackCommand('seekInCurrent', { time }))
+    ),
   };
 }
 

@@ -55,11 +55,7 @@ export function* playbackCommandWatcher() {
   // Watches for SEND_PLAYBACK_COMMAND actions and calls senPlaybackCommand when one comes in.
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
-  const watcher = yield takeEvery(SEND_PLAYBACK_COMMAND, sendPlaybackCommand);
-
-  // Suspend execution until location changes
-  yield take(LOCATION_CHANGE);
-  yield cancel(watcher);
+  yield takeEvery(SEND_PLAYBACK_COMMAND, sendPlaybackCommand);
 }
 
 export function* loadNowPlaying() {
@@ -148,11 +144,7 @@ export function* activePlayListData() {
   // Watches for LOAD_ACTIVE_PLAYLIST actions and calls getActivePlayListContents
   // when one comes in. By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
-  const watcher = yield takeLatest(LOAD_ACTIVE_PLAYLIST, getActivePlaylistContents);
-
-  // Suspend execution until location changes
-  yield take(LOCATION_CHANGE);
-  yield cancel(watcher);
+  yield takeLatest(LOAD_ACTIVE_PLAYLIST, getActivePlaylistContents);
 }
 
 

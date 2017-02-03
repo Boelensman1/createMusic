@@ -59,7 +59,7 @@ export default class CurrentPlayingController extends React.PureComponent {
   }
 
   render() {
-    const { nowPlaying, isPlaying } = this.props;
+    const { nowPlaying } = this.props;
 
     return (
       <CurrentPlayingControllerDiv>
