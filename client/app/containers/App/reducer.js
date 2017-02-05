@@ -13,9 +13,6 @@
 import { fromJS } from 'immutable';
 
 import {
-  LOAD_ARTISTLIST_SUCCESS,
-  LOAD_ARTISTLIST,
-  LOAD_ARTISTLIST_ERROR,
   /* LOAD_NOWPLAYING,
   LOAD_NOWPLAYING_ERROR, */
   LOAD_NOWPLAYING_SUCCESS,
@@ -28,26 +25,12 @@ import {
 const initialState = fromJS({
   loading: false,
   error: false,
-  artistList: false,
   nowPlaying: false,
   activePlaylistContents: false,
 });
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
-    case LOAD_ARTISTLIST:
-      return state
-        .set('loading', true)
-        .set('error', false)
-        .set('artistList', false);
-    case LOAD_ARTISTLIST_SUCCESS:
-      return state
-        .set('loading', false)
-        .set('artistList', action.artistList);
-    case LOAD_ARTISTLIST_ERROR:
-      return state
-        .set('error', action.error)
-        .set('loading', false);
     case LOAD_NOWPLAYING_SUCCESS:
       return state
         .set('nowPlaying', action.nowPlayingData);

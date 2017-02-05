@@ -2,8 +2,8 @@ import { serverUrl } from 'config';
 import { take, call, put, cancel, takeLatest } from 'redux-saga/effects';
 
 import { LOCATION_CHANGE } from 'react-router-redux';
-import { LOAD_ARTISTLIST } from 'containers/App/constants';
-import { artistListLoaded, artistListLoadingError } from 'containers/App/actions';
+import { LOAD_ARTISTLIST } from './constants';
+import { artistListLoaded, artistListLoadingError } from './actions';
 
 import request from 'utils/request';
 

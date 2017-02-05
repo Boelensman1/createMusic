@@ -16,11 +16,6 @@ const makeSelectError = () => createSelector(
   (globalState) => globalState.get('error')
 );
 
-const makeSelectArtistList = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.get('artistList')
-);
-
 const makeSelectIsPlaying = () => createSelector(
   selectGlobal,
   (globalState) => globalState.get('nowPlaying') && globalState.get('nowPlaying').state === 'play'
@@ -83,7 +78,6 @@ export {
   selectGlobal,
   makeSelectLoading,
   makeSelectError,
-  makeSelectArtistList,
   makeSelectLocationState,
   makeSelectIsPlaying,
   makeSelectNowPlayingId,

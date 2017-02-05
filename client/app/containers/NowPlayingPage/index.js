@@ -18,7 +18,7 @@ import {
 
 import CurrentPlayingController from './CurrentPlayingController';
 
-import messages from './messages';
+// import messages from './messages';
 
 import NowPlayingList from './NowPlayingList';
 

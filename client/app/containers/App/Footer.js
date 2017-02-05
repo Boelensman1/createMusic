@@ -8,10 +8,35 @@ const FooterDiv = styled.div`
   color: black;
 `;
 
+const FooterButtonDiv = styled.div`
+  display: inline-block;
+  margin-right: 1em;
+  a {
+    display: block;
+    padding: 0.1em;
+    &.active {
+      border: red solid;
+    }
+  }
+`;
+
+function FooterButton({ to, label }) {
+  return (
+    <FooterButtonDiv>
+      <Link to={to} activeClassName="active">{label}</Link>
+    </FooterButtonDiv>
+  );
+}
+FooterButton.propTypes = {
+  to: React.PropTypes.string.isRequired,
+  label: React.PropTypes.string.isRequired,
+};
+
 function Footer() {
   return (
     <FooterDiv>
-      <Link to="nowPlaying">now playing</Link>
+      <FooterButton to="/" label="Artists" />
+      <FooterButton to="/nowPlaying" label="Now Playing" />
     </FooterDiv>
   );
 }

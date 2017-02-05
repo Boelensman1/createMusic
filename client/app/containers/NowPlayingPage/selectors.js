@@ -1,7 +1,5 @@
 import { createSelector } from 'reselect';
 
-const selectGlobal = (state) => state.get('global');
-
 /**
  * Direct selector to the nowPlayingPage state domain
  */
