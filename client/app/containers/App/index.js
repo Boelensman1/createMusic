@@ -42,6 +42,8 @@ class App extends React.PureComponent { // eslint-disable-line react/prefer-stat
     children: React.PropTypes.node,
     loadNowPlaying: React.PropTypes.func.isRequired,
     loadActivePlaylist: React.PropTypes.func.isRequired,
+    routes: React.PropTypes.array,
+    params: React.PropTypes.object,
   };
 
   componentWillMount() {
@@ -50,11 +52,12 @@ class App extends React.PureComponent { // eslint-disable-line react/prefer-stat
   }
 
   render() {
+    const { routes, params, children } = this.props;
     return (
       <Page>
-        <Header />
+        <Header routes={routes} params={params} />
         <Content>
-          {React.Children.toArray(this.props.children)}
+          {React.Children.toArray(children)}
         </Content>
         <Footer />
       </Page>

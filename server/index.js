@@ -34,9 +34,11 @@ primus.on('connection', function connection(spark) {
 
 const playlistRoute = require('./routes/playlists');
 const artistRoute = require('./routes/artists');
+const albumRoute = require('./routes/album');
 const playbackRoute = require('./routes/playback');
 app.use(playlistRoute);
 app.use(artistRoute);
+app.use(albumRoute);
 app.use(playbackRoute);
 
 

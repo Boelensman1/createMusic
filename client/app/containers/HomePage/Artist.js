@@ -10,7 +10,7 @@ const ArtistLi = styled.li`
     }
 `;
 
-function Artist({ artist: {name} }) {
+function Artist({ artist: { name } }) {
   return (
     <ArtistLi>
       <Link to={`/artist/${name}`}>{name}</Link>

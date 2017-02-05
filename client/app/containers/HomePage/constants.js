@@ -1,4 +1,4 @@
-export const LOAD_ARTISTLIST = 'playMusic/App/LOAD_ARTISTLIST';
-export const LOAD_ARTISTLIST_SUCCESS = 'playMusic/App/LOAD_ARTISTLIST_SUCCESS';
-export const LOAD_ARTISTLIST_ERROR = 'playMusic/App/LOAD_ARTISTLIST_ERROR';
+export const LOAD_ARTISTLIST = 'playMusic/HomePage/LOAD_ARTISTLIST';
+export const LOAD_ARTISTLIST_SUCCESS = 'playMusic/HomePage/LOAD_ARTISTLIST_SUCCESS';
+export const LOAD_ARTISTLIST_ERROR = 'playMusic/HomePage/LOAD_ARTISTLIST_ERROR';
 

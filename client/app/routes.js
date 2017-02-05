@@ -19,7 +19,7 @@ export default function createRoutes(store) {
   return [
     {
       path: '/',
-      name: 'home',
+      name: 'Artists',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
@@ -38,9 +38,51 @@ export default function createRoutes(store) {
 
         importModules.catch(errorLoading);
       },
+      childRoutes: [{
+        path: '/artist/:artistName',
+        name: 'artistPage',
+        getComponent(nextState, cb) {
+          const importModules = Promise.all([
+            import('containers/ArtistPage/reducer'),
+            import('containers/ArtistPage/sagas'),
+            import('containers/ArtistPage'),
+          ]);
+
+          const renderRoute = loadModule(cb);
+
+          importModules.then(([reducer, sagas, component]) => {
+            injectReducer('artistPage', reducer.default);
+            injectSagas(sagas.default);
+            renderRoute(component);
+          });
+
+          importModules.catch(errorLoading);
+        },
+        childRoutes: [{
+          path: 'albums/:albumName',
+          name: 'albumPage',
+          getComponent(nextState, cb) {
+            const importModules = Promise.all([
+              import('containers/AlbumPage/reducer'),
+              import('containers/AlbumPage/sagas'),
+              import('containers/AlbumPage'),
+            ]);
+
+            const renderRoute = loadModule(cb);
+
+            importModules.then(([reducer, sagas, component]) => {
+              injectReducer('albumPage', reducer.default);
+              injectSagas(sagas.default);
+              renderRoute(component);
+            });
+
+            importModules.catch(errorLoading);
+          },
+        }],
+      }],
     }, {
       path: '/nowPlaying',
-      name: 'nowPlayingPage',
+      name: 'Now Playing',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
           // import('containers/NowPlayingPage/reducer'),

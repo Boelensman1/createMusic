@@ -34,6 +34,19 @@ const Meter = styled.div`
     background-color: red;
     overflow: hidden;
   }
+  &.transition {
+    span {
+      transition: width 1s;
+      transition-timing-function: linear;
+    }
+  }
+
+  &.ease{
+    span {
+      transition: width 0.6s;
+      transition-timing-function: ease-out;
+    }
+  }
 `;
 const MeterContainer = styled.div`
   flex: 1;
@@ -62,7 +75,7 @@ export class ProgressBar extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = ({ elapsed: 0, startCountDate: new Date() });
+    this.state = ({ elapsed: 0, startCountDate: new Date(), newSong: true });
     this._scrub = this.scrub.bind(this);
 
     const { durationAndElapsed: { elapsed }, isPlaying } = props;
@@ -72,7 +85,9 @@ export class ProgressBar extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { durationAndElapsed: { elapsed }, isPlaying } = nextProps;
-    this.setState({ elapsed, startCountDate: new Date() });
+    this.setState({ elapsed, newSong: elapsed < 1, ease: elapsed >= 1, startCountDate: new Date() });
+
+    this.stopCounting();
     this.startOrStopCounting(isPlaying);
   }
 
@@ -105,7 +120,7 @@ export class ProgressBar extends React.Component {
     const { startCountDate } = this.state;
     const initialElapsed = this.props.durationAndElapsed.elapsed;
     const secondsDifference = (new Date().getTime() - startCountDate.getTime()) / 1000;
-    this.setState({ elapsed: initialElapsed + secondsDifference });
+    this.setState({ elapsed: initialElapsed + secondsDifference, newSong: false, ease: false });
   }
 
   scrub(e) {
@@ -119,7 +134,7 @@ export class ProgressBar extends React.Component {
   }
 
   render() {
-    const elapsed = this.state.elapsed;
+    const { elapsed, newSong, ease } = this.state;
     const { duration } = this.props.durationAndElapsed;
 
     const progress = (elapsed / duration) * 100;
@@ -127,7 +142,7 @@ export class ProgressBar extends React.Component {
       <ProgressBarDiv>
         <TimingSpan>{toTime(elapsed)}</TimingSpan>
         <MeterContainer>
-          <Meter onClick={this._scrub} ref={(div) => { this.clickTarget = div; }} >
+          <Meter onClick={this._scrub} ref={(div) => { this.clickTarget = div; }} className={!newSong && (ease ? 'ease' : 'transition')}>
             <span style={{ width: `${progress}%` }}></span>
           </Meter>
         </MeterContainer>

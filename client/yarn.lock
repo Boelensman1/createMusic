@@ -2736,6 +2736,10 @@ executable@^1.0.0:
   dependencies:
     meow "^3.1.0"
 
+exenv@^1.2.0:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.1.tgz#75de1c8dee02e952b102aa17f8875973e0df14f9"
+
 exit-hook@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/exit-hook/-/exit-hook-1.1.1.tgz#f05ca233b48c05d54fff07765df8507e95c02ff8"
@@ -3871,6 +3875,10 @@ is-fullwidth-code-point@^1.0.0:
 is-fullwidth-code-point@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/is-fullwidth-code-point/-/is-fullwidth-code-point-2.0.0.tgz#a3b30a5c4f199183167aaab93beefae3ddfb654f"
+
+is-function@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/is-function/-/is-function-1.0.1.tgz#12cfb98b65b57dd3d193a3121f5f6e2f437602b5"
 
 is-gif@^1.0.0:
   version "1.0.0"
@@ -6104,6 +6112,12 @@ react-addons-test-utils@15.4.1:
   version "15.4.1"
   resolved "https://registry.yarnpkg.com/react-addons-test-utils/-/react-addons-test-utils-15.4.1.tgz#1e4caab151bf27cce26df5f9cb714f4fd8359ae1"
 
+react-breadcrumbs@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/react-breadcrumbs/-/react-breadcrumbs-1.5.2.tgz#fe1debb1e294991411a56ed3bccb9823efdd5fd8"
+  dependencies:
+    exenv "^1.2.0"
+
 react-deep-force-update@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"
@@ -6154,6 +6168,12 @@ react-redux@4.4.6:
     invariant "^2.0.0"
     lodash "^4.2.0"
     loose-envify "^1.1.0"
+
+react-router-breadcrumbs@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-router-breadcrumbs/-/react-router-breadcrumbs-2.0.0.tgz#abe9dd10a542157c978a50816e4b16aed0169c31"
+  dependencies:
+    is-function "^1.0.1"
 
 react-router-redux@4.0.6:
   version "4.0.6"

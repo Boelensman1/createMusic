@@ -39,6 +39,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render() {
+    const { children } = this.props;
+
+    if (children) {
+      return (<div>{children}</div>);
+    }
+
     const { loading, artistList, error } = this.props;
     return (
       <div>
