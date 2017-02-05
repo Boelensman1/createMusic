@@ -9,7 +9,7 @@ import { makeSelectIsPlaying, makeSelectTimingInfo } from 'containers/App/select
 
 import PlayPauseButton from 'containers/App/PlayPauseButton';
 
-import { sendPlaybackCommand } from 'containers/App/actions';
+import { sendPlaybackCommand, loadNowPlaying } from 'containers/App/actions';
 
 const PlayPauseButtonContainer = styled.span`
   height: 20px;
@@ -62,6 +62,32 @@ const pad = (number) => {
 
 const toTime = (seconds) => (`${pad(Math.floor(seconds / 60))}:${pad(Math.floor(seconds % 60))}`);
 
+const browserPrefixes = ['moz', 'ms', 'o', 'webkit'];
+
+// get the correct attribute name
+function getHiddenPropertyName(prefix) {
+  return (prefix ? prefix + 'Hidden' : 'hidden');
+}
+
+// get the correct event name
+function getVisibilityEvent(prefix) {
+  return (prefix ? prefix : '') + 'visibilitychange';
+}
+
+// get current browser vendor prefix
+function getBrowserPrefix() {
+  for (var i = 0; i < browserPrefixes.length; i++) {
+    if(getHiddenPropertyName(browserPrefixes[i]) in document) {
+      // return vendor prefix
+      return browserPrefixes[i];
+    }
+  }
+
+  // no vendor prefix needed
+  return null;
+}
+
+
 export class ProgressBar extends React.Component {
   static propTypes = {
     initialElapsed: React.PropTypes.number, // eslint-disable-line react/no-unused-prop-types
@@ -81,6 +107,12 @@ export class ProgressBar extends React.Component {
     const { durationAndElapsed: { elapsed }, isPlaying } = props;
     this.state = { elapsed, startCountDate: new Date() };
     this.startOrStopCounting(isPlaying);
+
+
+    // bind and handle events
+    const browserPrefix = getBrowserPrefix();
+    this._onVisibilityChange = this.onVisibilityChange.bind(this)
+    document.addEventListener(getVisibilityEvent(browserPrefix), this._onVisibilityChange, false);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -93,6 +125,16 @@ export class ProgressBar extends React.Component {
 
   componentWillUnmount() {
     this.stopCounting();
+    window.removeEventListener('visibilitychange', this._onVisibilityChange)
+  }
+
+  onVisibilityChange () {
+    if (!document.hidden) {
+      const { loadNowPlaying } = this.props;
+      // get status, as it might have become wrong
+      console.log('loading...');
+      loadNowPlaying()
+    }
   }
 
   startOrStopCounting(isPlaying) {
@@ -160,6 +202,7 @@ export function mapDispatchToProps(dispatch) {
     sendSeekCommand: (time) => (
       dispatch(sendPlaybackCommand('seekInCurrent', { time }))
     ),
+    loadNowPlaying: () => dispatch(loadNowPlaying()),
   };
 }
 
