@@ -1,14 +1,23 @@
 import React from 'react';
 
+import Artist from './Artist';
+
+import styled from 'styled-components';
+
+const ArtistListUl = styled.ul`
+  list-style: none;
+  padding: 0;
+`;
+
 function ArtistList({ loading, error, artistList }) {
   return (
-    <ul>
+    <ArtistListUl>
       {error === false ?
           (!loading && artistList) && artistList.map((artist, i) => (
-            <li key={i}>{artist}</li>
+            <Artist key={i} artist={artist} />
           )) :
             <span>{error}</span>}
-    </ul>
+    </ArtistListUl>
   );
 }
 
