@@ -15,6 +15,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import NowPlayingPage from 'containers/NowPlayingPage';
+
 import Header from './Header';
 import Footer from './Footer';
 
@@ -36,6 +38,21 @@ const Content = styled.div`
   }
 `;
 
+const DualContent = styled.div`
+  flex: 1 1 auto;
+  display: flex;
+  height: 100%;
+  @media (max-width: 500px) {
+    font-size: 10pt;
+  }
+`;
+
+const DualContentInner = styled.div`
+  position: relative; /* need this to position inner content */
+  overflow-y: auto;
+  padding: 1em;
+  width: 50%;
+`;
 
 class App extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
@@ -46,24 +63,59 @@ class App extends React.PureComponent { // eslint-disable-line react/prefer-stat
     params: React.PropTypes.object,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.updateDimensions = this.updateDimensions.bind(this);
+  }
+
   componentWillMount() {
     this.props.loadNowPlaying();
     this.props.loadActivePlaylist();
+    this.updateDimensions();
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.updateDimensions);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  }
+
+  updateDimensions() {
+    this.setState({ width: window.innerWidth });
   }
 
   render() {
     const { routes, params, children } = this.props;
+    const { width } = this.state;
     return (
       <Page>
         <Header routes={routes} params={params} />
-        <Content>
-          {React.Children.toArray(children)}
-        </Content>
+        { (width > 1000) ?
+          <DualContent>
+            <DualContentInner>
+              {React.Children.toArray(children)}
+            </DualContentInner>
+            <DualContentInner>
+              <NowPlayingPage />
+            </DualContentInner>
+          </DualContent> :
+          <Content>
+            {React.Children.toArray(children)}
+          </Content>
+        }
         <Footer />
       </Page>
     );
   }
 }
+  /*
+    render: function() {
+        return <span>{this.state.width} x {this.state.height}</span>;
+    },
+    */
+
 
 function mapDispatchToProps(dispatch) {
   return {

@@ -13,6 +13,8 @@ export const DEFAULT_LOCALE = 'en';
 
 export const SEND_PLAYBACK_COMMAND = 'playMusic/App/SEND_PLAYBACK_COMMAND';
 
+export const SEND_REPLACE_PLAYLIST = 'playMusic/App/SEND_REPLACE_PLAYLIST';
+
 export const LOAD_NOWPLAYING = 'playMusic/App/LOAD_NOWPLAYING';
 export const LOAD_NOWPLAYING_SUCCESS = 'playMusic/App/LOAD_NOWPLAYING_SUCCESS';
 export const LOAD_NOWPLAYING_ERROR = 'playMusic/App/LOAD_NOWPLAYING_ERROR';

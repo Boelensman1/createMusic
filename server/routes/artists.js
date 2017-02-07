@@ -46,11 +46,17 @@ function addAlbumArt(files) {
   })*/
 }
 
-router.get('/artists/:id', (req, res) => {
-  const id = req.params.id;
+router.get('/artists/:albumArtist', (req, res) => {
+  const albumArtist = req.params.albumArtist;
   const mpc = req.app.get('mpc');
-  return res.json(mpc.database.list('file', [['AlbumArtist', id]])
-    .then(r => [...r][0][1][0]).then((file) => {
+  console.log(albumArtist)
+  return res.json(mpc.database.list('file', [['AlbumArtist', albumArtist]])
+    .then(r => [...r][0]).then((files) => {
+      if (!files || files.length < 2 || files[1].length === 0) {
+        res.status(404);
+        return;
+      }
+      const file = files[1][0];
       artistPath = path.dirname(path.dirname(file));
       return mpc.database.listAllInfo(artistPath).then(addAlbumArt)
     }));

@@ -23,11 +23,15 @@ function addAlbumArt(artistName, result) {
 router.get('/artists/:albumArtist/albums/:album', (req, res) => {
   const album = req.params.album;
   const albumArtist = req.params.albumArtist;
-  console.log(album, albumArtist)
   const mpc = req.app.get('mpc');
 
   return res.json(mpc.database.list('file', [['AlbumArtist', albumArtist], ['Album', album]])
-    .then(r => [...r][0][1][0]).then((file) => {
+    .then(r => [...r][0]).then((files) => {
+      if (!files || files.length < 2  || files[1].length === 0) {
+        res.status(404);
+        return;
+      }
+      const file = files[1][0];
       albumPath = path.dirname(file);
       return mpc.database.listInfo(albumPath).then(addSongArt)
     }));

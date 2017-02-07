@@ -20,11 +20,11 @@ const AlbumArt = styled.img`
 
 // function Album({ album: { name } }) {
 // <Link to={`/album/${name}`}>{name}</Link>
-function Album({ album: { name, albumArt, pathArtist, pathAlbum } }) {
+function Album({ album: { name, albumArt, albumArtist } }) {
   return (
     <AlbumLi>
       <AlbumArt src={albumArt} />
-      <Link to={`/artist/${pathArtist}/albums/${name}`}>{name}</Link>
+      <Link to={`/artist/${encodeURIComponent(albumArtist)}/albums/${encodeURIComponent(name)}`}>{name}</Link>
     </AlbumLi>
   );
 }

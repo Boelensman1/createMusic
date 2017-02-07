@@ -17,6 +17,7 @@
 
 import {
   SEND_PLAYBACK_COMMAND,
+  SEND_REPLACE_PLAYLIST,
   LOAD_NOWPLAYING,
   LOAD_NOWPLAYING_ERROR,
   LOAD_NOWPLAYING_SUCCESS,
@@ -35,6 +36,19 @@ export function sendPlaybackCommand(command, payload) {
     type: SEND_PLAYBACK_COMMAND,
     command,
     payload,
+  };
+}
+
+/**
+ * Send a replace playlist command, this action starts the request saga
+ *
+ * @return {object} An action object with a type of LOAD_ARTISTLIST
+ */
+export function sendReplacePlaylist(album, albumArtist) {
+  return {
+    type: SEND_REPLACE_PLAYLIST,
+    album,
+    albumArtist,
   };
 }
 

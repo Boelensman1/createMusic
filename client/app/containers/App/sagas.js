@@ -7,7 +7,12 @@ import request from 'utils/request';
 
 import { LOCATION_CHANGE } from 'react-router-redux';
 
-import { SEND_PLAYBACK_COMMAND, LOAD_NOWPLAYING, LOAD_ACTIVE_PLAYLIST } from './constants';
+import {
+  SEND_PLAYBACK_COMMAND,
+  SEND_REPLACE_PLAYLIST,
+  LOAD_NOWPLAYING,
+  LOAD_ACTIVE_PLAYLIST,
+} from './constants';
 
 import {
   nowPlayingLoaded,
@@ -48,6 +53,33 @@ export function* sendPlaybackCommand(action) {
   }
 }
 
+export function* sendReplacePlaylist(action) {
+  const { album, albumArtist } = action;
+
+  const requestUrl = `${serverUrl}/replacePlaylist`;
+
+  const body = {};
+  if (album) {
+    body.album = album;
+    body.albumArtist = albumArtist;
+  }
+
+  const options = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  };
+
+
+  try {
+    // Call our request helper (see 'utils/request')
+    yield call(request, requestUrl, options);
+    // yield put(artistListLoaded(artistList));
+  } catch (err) {
+    // yield put(artistListLoadingError(err));
+  }
+}
+
 /**
  * Root saga manages watcher lifecycle
  */
@@ -56,6 +88,16 @@ export function* playbackCommandWatcher() {
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
   yield takeEvery(SEND_PLAYBACK_COMMAND, sendPlaybackCommand);
+}
+
+/**
+ * Root saga manages watcher lifecycle
+ */
+export function* replacePlaylistWatcher() {
+  // Watches for SEND_REPLACE_PLAYLIST actions and calls sendReplacePlaylist when one comes in.
+  // By using `takeLatest` only the result of the latest API call is applied.
+  // It returns task descriptor (just like fork) so we can continue execution
+  yield takeEvery(SEND_REPLACE_PLAYLIST, sendReplacePlaylist);
 }
 
 export function* loadNowPlaying() {
@@ -151,6 +193,7 @@ export function* activePlayListData() {
 // Bootstrap sagas
 export default [
   playbackCommandWatcher,
+  replacePlaylistWatcher,
   loadNowPlayingWatcher,
   primusWatcher,
   activePlayListData,

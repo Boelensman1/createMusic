@@ -10,8 +10,6 @@ import { createStructuredSelector } from 'reselect';
 import pauseIcon from './icons/pause.svg';
 import playIcon from './icons/play.svg';
 
-import FontAwesome from 'react-fontawesome';
-
 import { makeSelectIsPlaying } from './selectors';
 import { sendPlaybackCommand } from './actions';
 
@@ -33,13 +31,15 @@ export class PlayPauseButton extends React.PureComponent { // eslint-disable-lin
     this.play = this.props.sendPlaybackCommand.bind(this, 'play');
     this.pause = this.props.sendPlaybackCommand.bind(this, 'pause');
   }
-  // <FontAwesome name={isPlaying ? 'pause-circle' : 'play-circle'} size="3x" />
 
   render() {
     const { isPlaying } = this.props;
     return (
       <PlayButton onClick={isPlaying ? this.pause : this.play}>
-        <img src={isPlaying ? pauseIcon : playIcon} />
+        <img
+          alt={isPlaying ? 'pause' : 'play'}
+          src={isPlaying ? pauseIcon : playIcon}
+        />
       </PlayButton>
     );
   }

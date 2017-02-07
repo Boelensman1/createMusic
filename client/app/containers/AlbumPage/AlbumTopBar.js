@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import ReplacePlaylistButton from 'containers/App/ReplacePlaylistButton';
+
 const Title = styled.h1`
   color: white;
   margin: 0;
@@ -17,11 +19,12 @@ const AlbumTopBarDiv = styled.div`
   align-items: flex-end;
 `;
 
-function AlbumTopBar({ firstSong: { album, albumArt } }) {
+function AlbumTopBar({ firstSong: { album, albumArt, albumArtist } }) {
   return (
     <AlbumTopBarDiv>
       <AlbumArt src={albumArt} />
       <Title>{album}</Title>
+      <ReplacePlaylistButton album={album} albumArtist={albumArtist} />
     </AlbumTopBarDiv>
   );
 }

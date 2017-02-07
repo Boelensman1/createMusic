@@ -19,29 +19,29 @@ router.post('/playback/:command', (req, res) => {
   const command = req.params.command;
   switch(command) {
       case 'play':
-        return res.json(mpc.playback.play().then(() => undefined));
+        return res.json(mpc.playback.play().then(() => null));
 
       case 'pause':
-        return res.json(mpc.playback.pause().then(() => undefined));
+        return res.json(mpc.playback.pause().then(() => null));
 
       case 'stop':
-        return res.json(mpc.playback.stop().then(() => undefined));
+        return res.json(mpc.playback.stop().then(() => null));
 
       case 'next':
-        return res.json(mpc.playback.next().then(() => undefined));
+        return res.json(mpc.playback.next().then(() => null));
 
       case 'previous':
-        return res.json(mpc.playback.previous().then(() => undefined));
+        return res.json(mpc.playback.previous().then(() => null));
 
       case 'playId':
         const songId = req.body.songId;
         if (!songId) { return res.status(400).end() }
-        return res.json(mpc.playback.playId(songId).then(() => undefined));
+        return res.json(mpc.playback.playId(songId).then(() => null));
 
       case 'seekInCurrent':
         const time = req.body.time;
         if (!time) { return res.status(400).end() }
-        return res.json(mpc.playback.seekCur(time).then(() => undefined));
+        return res.json(mpc.playback.seekCur(time).then(() => null));
 
       default:
         return res.status(404).end();

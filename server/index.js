@@ -36,10 +36,12 @@ const playlistRoute = require('./routes/playlists');
 const artistRoute = require('./routes/artists');
 const albumRoute = require('./routes/album');
 const playbackRoute = require('./routes/playback');
+const replacePlaylist = require('./routes/replacePlaylist');
 app.use(playlistRoute);
 app.use(artistRoute);
 app.use(albumRoute);
 app.use(playbackRoute);
+app.use(replacePlaylist);
 
 
 mpc.connectTCP('mainpc', 6600);

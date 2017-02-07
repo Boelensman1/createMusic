@@ -13,7 +13,7 @@ const ArtistLi = styled.li`
 function Artist({ artist: { name } }) {
   return (
     <ArtistLi>
-      <Link to={`/artist/${name}`}>{name}</Link>
+      <Link to={`/artist/${encodeURIComponent(name)}`}>{name}</Link>
     </ArtistLi>
   );
 }

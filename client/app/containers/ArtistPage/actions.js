@@ -17,7 +17,7 @@ export function loadArtistAlbumList(artistName) {
   return {
     type: LOAD_ARTISTALBUMLIST,
     payload: {
-      artistName,
+      artistName: encodeURIComponent(artistName),
     },
   };
 }
