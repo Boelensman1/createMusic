@@ -14,7 +14,7 @@ router.post('/ReplacePlaylist', (req, res) => {
   }
   return res.json(mpc.currentPlaylist.clear().then(() => (
     mpc.database.findAdd(search)).then(
-      mpc.playback.play().then(() => null)
+      mpc.playback.play().then(() => undefined)
     )
   ));
 });
