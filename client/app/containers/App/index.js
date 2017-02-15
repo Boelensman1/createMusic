@@ -105,7 +105,7 @@ class App extends React.PureComponent { // eslint-disable-line react/prefer-stat
             {React.Children.toArray(children)}
           </Content>
         }
-        <Footer />
+        <Footer displayNowPlaying={width <= 1000} />
       </Page>
     );
   }

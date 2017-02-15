@@ -1,5 +1,6 @@
 const config = {
-  serverUrl: 'http://localhost:3030',
+  // serverUrl: 'http://localhost:3030',
+  serverUrl: 'http://mainpc:3030',
 };
 
 export default config;

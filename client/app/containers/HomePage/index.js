@@ -10,7 +10,6 @@
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -18,7 +17,6 @@ import { loadArtistList } from './actions';
 import { makeSelectArtistList, makeSelectLoading, makeSelectError } from './selectors';
 
 import ArtistList from './ArtistList';
-import messages from './messages';
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
@@ -48,9 +46,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     const { loading, artistList, error } = this.props;
     return (
       <div>
-        <h1>
-          <FormattedMessage {...messages.header} />
-        </h1>
         <ArtistList loading={loading} artistList={artistList} error={error} />
       </div>
     );

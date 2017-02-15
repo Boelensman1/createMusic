@@ -32,11 +32,11 @@ FooterButton.propTypes = {
   label: React.PropTypes.string.isRequired,
 };
 
-function Footer() {
+function Footer({ displayNowPlaying }) {
   return (
     <FooterDiv>
       <FooterButton to="/" label="Artists" />
-      <FooterButton to="/nowPlaying" label="Now Playing" />
+      { displayNowPlaying && <FooterButton to="/nowPlaying" label="Now Playing" /> }
     </FooterDiv>
   );
 }

@@ -58,6 +58,7 @@ export function sendReplacePlaylist(album, albumArtist) {
  * @return {object} An action object with a type of LOAD_NOWPLAYING
  */
 export function loadNowPlaying() {
+  console.log('loading now playing');
   return {
     type: LOAD_NOWPLAYING,
   };

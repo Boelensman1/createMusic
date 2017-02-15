@@ -66,18 +66,18 @@ const browserPrefixes = ['moz', 'ms', 'o', 'webkit'];
 
 // get the correct attribute name
 function getHiddenPropertyName(prefix) {
-  return (prefix ? prefix + 'Hidden' : 'hidden');
+  return (prefix ? `${prefix}Hidden` : 'hidden');
 }
 
 // get the correct event name
 function getVisibilityEvent(prefix) {
-  return (prefix ? prefix : '') + 'visibilitychange';
+  return `${prefix || ''}visibilitychange`;
 }
 
 // get current browser vendor prefix
 function getBrowserPrefix() {
-  for (var i = 0; i < browserPrefixes.length; i++) {
-    if(getHiddenPropertyName(browserPrefixes[i]) in document) {
+  for (let i = 0; i < browserPrefixes.length; i += 1) {
+    if (getHiddenPropertyName(browserPrefixes[i]) in document) {
       // return vendor prefix
       return browserPrefixes[i];
     }
@@ -93,6 +93,7 @@ export class ProgressBar extends React.Component {
     initialElapsed: React.PropTypes.number, // eslint-disable-line react/no-unused-prop-types
     sendSeekCommand: React.PropTypes.func,
     isPlaying: React.PropTypes.bool,
+    reLoadNowPlaying: React.PropTypes.func,
     durationAndElapsed: React.PropTypes.oneOfType([
       React.PropTypes.object,
       React.PropTypes.bool,
@@ -108,10 +109,9 @@ export class ProgressBar extends React.Component {
     this.state = { elapsed, startCountDate: new Date() };
     this.startOrStopCounting(isPlaying);
 
-
     // bind and handle events
     const browserPrefix = getBrowserPrefix();
-    this._onVisibilityChange = this.onVisibilityChange.bind(this)
+    this._onVisibilityChange = this.onVisibilityChange.bind(this);
     document.addEventListener(getVisibilityEvent(browserPrefix), this._onVisibilityChange, false);
   }
 
@@ -125,15 +125,15 @@ export class ProgressBar extends React.Component {
 
   componentWillUnmount() {
     this.stopCounting();
-    window.removeEventListener('visibilitychange', this._onVisibilityChange)
+    window.removeEventListener('visibilitychange', this._onVisibilityChange);
   }
 
-  onVisibilityChange () {
+  onVisibilityChange() {
     if (!document.hidden) {
-      const { loadNowPlaying } = this.props;
+      const { reLoadNowPlaying } = this.props;
       // get status, as it might have become wrong
       console.log('loading...');
-      loadNowPlaying()
+      reLoadNowPlaying();
     }
   }
 
@@ -202,7 +202,7 @@ export function mapDispatchToProps(dispatch) {
     sendSeekCommand: (time) => (
       dispatch(sendPlaybackCommand('seekInCurrent', { time }))
     ),
-    loadNowPlaying: () => dispatch(loadNowPlaying()),
+    reLoadNowPlaying: () => dispatch(loadNowPlaying()),
   };
 }
 
